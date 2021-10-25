@@ -219,7 +219,6 @@ class Video_Latency(tk.Frame):
         t_all = (tencode + toutputbuff + tinputbuff + tdecoder)
         self.myText.set(str(t_all) + " ms")
 
-
 # Main Program;
 if "__main__" == __name__:
     app = App()
