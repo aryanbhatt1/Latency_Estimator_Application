@@ -65,6 +65,7 @@ class register(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.username = tk.StringVar()
         self.password = tk.StringVar()
+
         tk.Label(self, text="Please enter details below", bg="blue").pack()
         tk.Label(self, text="").pack()
         self.username_lable = tk.Label(self, text="Username * ")
@@ -81,7 +82,6 @@ class register(tk.Frame):
     def register_user(self):
         self.username_info = self.username.get()
         self.password_info = self.password.get()
-
         file = open(self.username_info, "w")
         file.write(self.username_info + "\n")
         file.write(self.password_info)
@@ -96,7 +96,6 @@ class log_in(tk.Frame):
         tk.Frame.__init__(self, parent)
         tk.Label(self, text="Please enter details below to login").pack()
         tk.Label(self, text="").pack()
-
         self.username_verify = tk.StringVar()
         self.password_verify = tk.StringVar()
         tk.Label(self, text="Username * ").pack()
@@ -146,42 +145,22 @@ class startPage(tk.Frame):
 
 class Bullet(tk.Frame):
     def calculate(self):
-        time = int(self.e8.get()) / (2 * math.cos(int(self.e2.get())) * math.sin(int(self.e4.get()))) - int(
-            self.e6.get()) * (math.cos(int(self.e7.get())))
-        self.myText.set(time)
+        time = int(self.e1.get())/int(self.e2.get())
+        self.myText.set(str(time)+" s")
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.myText = tk.StringVar()
-        tk.Label(self, text="Height of Nozzle").grid(row=0, sticky=tk.W)
-        tk.Label(self, text="Velocity of Firing").grid(row=1, sticky=tk.W)
-        tk.Label(self, text="Angle of ground as base").grid(row=2, sticky=tk.W)
-        tk.Label(self, text="Angle from tank Nozzle (rest) as base").grid(row=3, sticky=tk.W)
-        tk.Label(self, text="Object/target Height").grid(row=4, sticky=tk.W)
-        tk.Label(self, text="Velocity of Target").grid(row=5, sticky=tk.W)
-        tk.Label(self, text="angle of velocity from nozzle as base").grid(row=6, sticky=tk.W)
-        tk.Label(self, text="distance between target and firing").grid(row=7, sticky=tk.W)
-        tk.Label(self, text="Result:").grid(row=8, sticky=tk.W)
-        tk.Label(self, text="", textvariable=self.myText).grid(row=8, column=1, sticky=tk.W)
+        tk.Label(self, text="Distance (m)").grid(row=0, sticky=tk.W)
+        tk.Label(self, text="Velocity (m/s)").grid(row=1, sticky=tk.W)
+        tk.Label(self, text="Result : ").grid(row=2, sticky=tk.W)
+        tk.Label(self, text="", textvariable=self.myText).grid(row=2, column=1, sticky=tk.W)
 
         self.e1 = tk.Entry(self)
         self.e2 = tk.Entry(self)
-        self.e3 = tk.Entry(self)
-        self.e4 = tk.Entry(self)
-        self.e4 = tk.Entry(self)
-        self.e5 = tk.Entry(self)
-        self.e6 = tk.Entry(self)
-        self.e7 = tk.Entry(self)
-        self.e8 = tk.Entry(self)
 
         self.e1.grid(row=0, column=1)
         self.e2.grid(row=1, column=1)
-        self.e3.grid(row=2, column=1)
-        self.e4.grid(row=3, column=1)
-        self.e5.grid(row=4, column=1)
-        self.e6.grid(row=5, column=1)
-        self.e7.grid(row=6, column=1)
-        self.e8.grid(row=7, column=1)
 
         b = tk.Button(self, text="Calculate", command=lambda: self.calculate())
         b.grid(row=0, column=2, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S, padx=5, pady=5)
