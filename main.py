@@ -47,16 +47,16 @@ class App(tk.Tk):
 class register_user_screen(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        tk.Label(self, text="Welcome To Latency Estimator Application ", bg="blue", fg="white", font=("Calibri", 13),
+        tk.Label(self, text="Welcome To Latency Estimator Application ", bg="#093d81", fg="white", font=("Calibri", 13),
                  width=80, height=2).grid(row=0)
         load = Image.open("img/cvrde-drdo-logo.png")
         render = ImageTk.PhotoImage(load)
         img = tk.Label(self, image=render)
         img.image = render
         img.grid(row=2, pady=70)
-        tk.Button(self, text="Login", height="2", width="30", command=lambda: controller.show_frame(log_in)).grid(
+        tk.Button(self, text="Login", height="2", width="30",bg="#093d81",fg="white", command=lambda: controller.show_frame(log_in)).grid(
             row=10, sticky=tk.S)
-        tk.Button(self, text="Register", height="2", width="30", command=lambda: controller.show_frame(register)).grid(
+        tk.Button(self, text="Register", height="2", width="30",bg="#093d81",fg="white", command=lambda: controller.show_frame(register)).grid(
             row=13, sticky=tk.S, pady=5)
 
 
@@ -66,18 +66,19 @@ class register(tk.Frame):
         self.username = tk.StringVar()
         self.password = tk.StringVar()
 
-        tk.Label(self, text="Please enter details below", bg="blue").pack()
+        tk.Label(self, text="Please enter details below", bg="#093d81", fg="white", font=("Calibri", 13), width=80, height=2).pack()
         tk.Label(self, text="").pack()
-        self.username_lable = tk.Label(self, text="Username * ")
+        self.username_lable = tk.Label(self, text="Username * ",font=("Calibri", 13))
         self.username_lable.pack()
-        self.username_entry = tk.Entry(self, textvariable=self.username)
+        self.username_entry = tk.Entry(self, font=("Calibri", 10),textvariable=self.username)
         self.username_entry.pack()
-        self.password_lable = tk.Label(self, text="Password * ")
+        self.password_lable = tk.Label(self, text="Password * ",font=("Calibri", 13))
         self.password_lable.pack()
-        self.password_entry = tk.Entry(self, textvariable=self.password, show='*')
+        self.password_entry = tk.Entry(self, textvariable=self.password, show='*',font=("Calibri", 10))
         self.password_entry.pack()
         tk.Label(self, text="").pack()
-        tk.Button(self, text="Register", width=10, height=1, bg="blue", command=lambda: self.register_user()).pack()
+        tk.Button(self, text="Register", width=20, height=2, bg="#093d81",fg="white", command=lambda: self.register_user()).pack()
+        tk.Button(self, text="Back", width=20, height=2,command=lambda: controller.show_frame(register_user_screen)).pack(pady=8)
 
     def register_user(self):
         self.username_info = self.username.get()
@@ -94,19 +95,20 @@ class register(tk.Frame):
 class log_in(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        tk.Label(self, text="Please enter details below to login").pack()
+        tk.Label(self, text="Please enter details below to login", bg="#093d81", fg="white", font=("Calibri", 13), width=80, height=2).pack()
         tk.Label(self, text="").pack()
         self.username_verify = tk.StringVar()
         self.password_verify = tk.StringVar()
-        tk.Label(self, text="Username * ").pack()
-        self.username_login_entry = tk.Entry(self, textvariable=self.username_verify)
+        tk.Label(self, text="Username * ", font=("Calibri", 13)).pack()
+        self.username_login_entry = tk.Entry(self, textvariable=self.username_verify,width=20)
         self.username_login_entry.pack()
         tk.Label(self, text="").pack()
-        tk.Label(self, text="Password * ").pack()
-        self.password_login_entry = tk.Entry(self, textvariable=self.password_verify, show='*')
+        tk.Label(self, text="Password * ",font=("Calibri", 13)).pack()
+        self.password_login_entry = tk.Entry(self, textvariable=self.password_verify, show='*',width=20)
         self.password_login_entry.pack()
         tk.Label(self, text="").pack()
-        tk.Button(self, text="Login", width=10, height=1, command=lambda: self.login_verify(parent, controller)).pack()
+        tk.Button(self, text="Login", width=20, height=2,bg="#093d81",fg="white", command=lambda: self.login_verify(parent, controller)).pack()
+        tk.Button(self, text="Back", width=20, height=2,command=lambda: controller.show_frame(register_user_screen)).pack(pady=8)
 
     def login_verify(self, parent, controller):
         username1 = self.username_verify.get()
@@ -145,8 +147,8 @@ class startPage(tk.Frame):
 
 class Bullet(tk.Frame):
     def calculate(self):
-        time = int(self.e1.get())/int(self.e2.get())
-        self.myText.set(str(time)+" s")
+        time = int(self.e1.get()) / int(self.e2.get())
+        self.myText.set(str(time) + " s")
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -197,6 +199,7 @@ class Video_Latency(tk.Frame):
         tdecoder = ((3 * 640) / int(self.e3.get())) / 1000
         t_all = (tencode + toutputbuff + tinputbuff + tdecoder)
         self.myText.set(str(t_all) + " ms")
+
 
 # Main Program;
 if "__main__" == __name__:
