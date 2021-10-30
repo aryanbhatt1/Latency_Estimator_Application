@@ -29,7 +29,7 @@ class App(tk.Tk):
         self.frames = {}
 
         # iterating through a tuple consisting of the different page layouts
-        page_layout = (register_user_screen, register, log_in, startPage, Bullet, Video_Latency)
+        page_layout = (register_user_screen, register, log_in, startPage, Bullet, Video_Latency, UGV_Vehicle_Control)
         for F in page_layout:
             frame = F(container, self)
 
@@ -114,7 +114,7 @@ class log_in(tk.Frame):
         self.password_login_entry.pack()
         tk.Label(self, text="").pack()
         tk.Button(self, text="Login", width=20, height=2, bg="#093d81", fg="white",
-                  command=lambda: self.login_verify(parent, controller)).pack()
+                  command=lambda: (self.login_verify(parent, controller))).pack()
         tk.Button(self, text="Back", width=20, height=2,
                   command=lambda: controller.show_frame(register_user_screen)).pack(pady=8)
 
@@ -129,28 +129,65 @@ class log_in(tk.Frame):
             file1 = open(username1, "r")
             verify = file1.read().splitlines()
             if password1 in verify:
-                self.login_success(parent, controller)
-
-    def login_success(self, parent, controller):
-        tk.Label(self, text="Login Success").pack()
-        tk.Button(self, text="OK", command=lambda: controller.show_frame(startPage)).pack()
-
+                controller.show_frame(startPage)
 
 # first window frame startPage
 class startPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        button1 = ttk.Button(self, text="Bullet", command=lambda: controller.show_frame(Bullet))
-        button1.grid(row=1, column=5, ipadx=10, ipady=20, padx=110, pady=40)
+        tk.Label(self, text="Choose An Option", bg="#093d81", fg="white", font=("Calibri", 13),
+                 width=80, height=2).pack()
+        button1 = tk.Button(self, text="Bullet", width=20, height=2, bg="#093d81", fg="white",
+                            command=lambda: controller.show_frame(Bullet))
+        button1.pack()
+        button1.place(x=45, y=75)
 
-        button2 = ttk.Button(self, text="Video Latency (H.264)", command=lambda: controller.show_frame(Video_Latency))
-        button2.grid(row=1, column=7, ipadx=10, ipady=20, padx=40, pady=40)
+        button2 = tk.Button(self, text="Video Latency (H.264)", width=20, height=2, bg="#093d81", fg="white",
+                            command=lambda: controller.show_frame(Video_Latency))
+        button2.pack()
+        button2.place(x=275, y=75)
 
-        button3 = ttk.Button(self, text="button3")
-        button3.grid(row=2, column=5, ipadx=10, ipady=20, padx=110, pady=40)
+        button3 = tk.Button(self, text="UGV Vehicle Control", width=20, height=2, bg="#093d81", fg="white",
+                            command=lambda :controller.show_frame(UGV_Vehicle_Control))
+        button3.pack()
+        button3.place(x=500, y=75)
 
-        button4 = ttk.Button(self, text="button4")
-        button4.grid(row=2, column=7, ipadx=10, ipady=20, padx=40, pady=40)
+        button4 = tk.Button(self, text="button4", width=20, height=2, bg="#093d81", fg="white")
+        button4.pack()
+        button4.place(x=45, y=150)
+        button5 = tk.Button(self, text="button4", width=20, height=2, bg="#093d81", fg="white")
+        button5.pack()
+        button5.place(x=275, y=150)
+        button6 = tk.Button(self, text="button4", width=20, height=2, bg="#093d81", fg="white")
+        button6.pack()
+        button6.place(x=500, y=150)
+        button7 = tk.Button(self, text="button4", width=20, height=2, bg="#093d81", fg="white")
+        button7.pack()
+        button7.place(x=45, y=225)
+        button8 = tk.Button(self, text="button4", width=20, height=2, bg="#093d81", fg="white")
+        button8.pack()
+        button8.place(x=275, y=225)
+        button9 = tk.Button(self, text="button4", width=20, height=2, bg="#093d81", fg="white")
+        button9.pack()
+        button9.place(x=500, y=225)
+        button9 = tk.Button(self, text="Log Out!!", width=20, height=2, bg="red", fg="white",
+                            command=lambda: controller.show_frame(register_user_screen))
+        button9.pack()
+        button9.place(x=275, y=300)
+
+class UGV_Vehicle_Control(tk.Frame):
+    def __init__(self,parent,controller):
+        tk.Frame.__init__(self, parent)
+        tk.Frame.configure(self)
+        tk.Label(self, text="UGV Vehicle Control", bg="#093d81", fg="white", font=("Calibri", 13),
+                 width=80, height=2).grid(row=0)
+        load = Image.open("img/UGV_vehicle_control.png")
+        render = ImageTk.PhotoImage(load)
+        img = tk.Label(self, image=render)
+        img.image = render
+        img.grid(row=2,sticky=tk.N)
+        UGV_Vehicle_Control_back_button = tk.Button(self, text="Back",width=20,height=2,command=lambda:controller.show_frame(startPage))
+        UGV_Vehicle_Control_back_button.grid(row=3,sticky=tk.E,padx=40)
 
 
 class Bullet(tk.Frame):
@@ -167,22 +204,28 @@ class Bullet(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.myText = tk.StringVar()
-        tk.Label(self, text="Height (m)").grid(row=0, sticky=tk.W)
-        tk.Label(self, text="Velocity (m/s)").grid(row=1, sticky=tk.W)
-        tk.Label(self, text="Angle of elevation (degree)").grid(row=2, sticky=tk.W)
-        tk.Label(self, text="Distance (m)").grid(row=3, sticky=tk.W)
-        tk.Label(self, text="Result : ").grid(row=4, sticky=tk.W)
-        tk.Label(self, text="", textvariable=self.myText).grid(row=4, column=1, sticky=tk.W)
+        tk.Label(self, text="Choose An Option",fg="#093d81", font=("Calibri", 13), height=2).grid(row=0)
+        tk.Label(self, text="Height (m)").grid(row=1, sticky=tk.W)
+        tk.Label(self, text="Velocity (m/s)").grid(row=2, sticky=tk.W)
+        tk.Label(self, text="Angle of elevation (degree)").grid(row=3, sticky=tk.W)
+        tk.Label(self, text="Distance (m)").grid(row=4, sticky=tk.W)
+        tk.Label(self, text="Result : ").grid(row=5, sticky=tk.W)
+        tk.Label(self, text="", textvariable=self.myText).grid(row=5, column=1, sticky=tk.W)
 
         self.e1 = tk.Entry(self)
         self.e2 = tk.Entry(self)
         self.e3 = tk.Entry(self)
         self.e4 = tk.Entry(self)
 
-        self.e1.grid(row=0, column=1)
-        self.e2.grid(row=1, column=1)
-        self.e3.grid(row=2, column=1)
-        self.e4.grid(row=3, column=1)
+        self.e1.grid(row=1, column=1)
+        self.e2.grid(row=2, column=1)
+        self.e3.grid(row=3, column=1)
+        self.e4.grid(row=4, column=1)
+
+        self.e1.insert(0, "0")
+        self.e2.insert(0, "0")
+        self.e3.insert(0, "0")
+        self.e4.insert(0, "0")
 
         b = tk.Button(self, text="Calculate", command=lambda: self.calculate())
         b.grid(row=0, column=2, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S, padx=5, pady=5)
