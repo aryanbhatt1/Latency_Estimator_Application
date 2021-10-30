@@ -30,7 +30,8 @@ class App(tk.Tk):
         self.frames = {}
 
         # iterating through a tuple consisting of the different page layouts
-        page_layout = (register_user_screen, register, log_in, startPage, Bullet, Video_Latency, UGV_Vehicle_Control)
+        page_layout = (register_user_screen, register, log_in, startPage, Bullet, Video_Latency, UGV_Vehicle_Control,
+                       obstacleDetectionModule)
         for F in page_layout:
             frame = F(container, self)
 
@@ -139,52 +140,72 @@ class startPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         tk.Label(self, text="Choose An Option", bg="#093d81", fg="white", font=("Calibri", 13),
                  width=80, height=2).pack()
-        button1 = tk.Button(self, text="Bullet", width=20, height=2, bg="#093d81", fg="white",
+        button1 = tk.Button(self, text="Bullet", width=25, height=2, bg="#093d81", fg="white",
                             command=lambda: controller.show_frame(Bullet))
         button1.pack()
-        button1.place(x=45, y=75)
+        button1.place(x=30, y=75)
 
-        button2 = tk.Button(self, text="Video Latency (H.264)", width=20, height=2, bg="#093d81", fg="white",
+        button2 = tk.Button(self, text="Perception Module", width=25, height=2, bg="#093d81", fg="white",
                             command=lambda: controller.show_frame(Video_Latency))
         button2.pack()
-        button2.place(x=275, y=75)
+        button2.place(x=260, y=75)
 
-        button3 = tk.Button(self, text="UGV Vehicle Control", width=20, height=2, bg="#093d81", fg="white",
+        button3 = tk.Button(self, text="DBW Module", width=25, height=2, bg="#093d81", fg="white",
                             command=lambda: controller.show_frame(UGV_Vehicle_Control))
         button3.pack()
-        button3.place(x=500, y=75)
+        button3.place(x=485, y=75)
 
-        button4 = tk.Button(self, text="button4", width=20, height=2, bg="#093d81", fg="white")
+        button4 = tk.Button(self, text="Obstacle Detection Module", width=25, height=2, bg="#093d81", fg="white",
+                            command=lambda: controller.show_frame(obstacleDetectionModule))
         button4.pack()
-        button4.place(x=45, y=150)
-        button5 = tk.Button(self, text="button4", width=20, height=2, bg="#093d81", fg="white")
+        button4.place(x=30, y=150)
+        button5 = tk.Button(self, text="button4", width=25, height=2, bg="#093d81", fg="white")
         button5.pack()
-        button5.place(x=275, y=150)
-        button6 = tk.Button(self, text="button4", width=20, height=2, bg="#093d81", fg="white")
+        button5.place(x=260, y=150)
+        button6 = tk.Button(self, text="button4", width=25, height=2, bg="#093d81", fg="white")
         button6.pack()
-        button6.place(x=500, y=150)
-        button7 = tk.Button(self, text="button4", width=20, height=2, bg="#093d81", fg="white")
+        button6.place(x=485, y=150)
+        button7 = tk.Button(self, text="button4", width=25, height=2, bg="#093d81", fg="white")
         button7.pack()
-        button7.place(x=45, y=225)
-        button8 = tk.Button(self, text="button4", width=20, height=2, bg="#093d81", fg="white")
+        button7.place(x=30, y=225)
+        button8 = tk.Button(self, text="button4", width=25, height=2, bg="#093d81", fg="white")
         button8.pack()
-        button8.place(x=275, y=225)
-        button9 = tk.Button(self, text="button4", width=20, height=2, bg="#093d81", fg="white")
+        button8.place(x=260, y=225)
+        button9 = tk.Button(self, text="button4", width=25, height=2, bg="#093d81", fg="white")
         button9.pack()
-        button9.place(x=500, y=225)
-        button9 = tk.Button(self, text="Log Out!!", width=20, height=2, bg="red", fg="white",
+        button9.place(x=485, y=225)
+        button10 = tk.Button(self, text="Log Out!!", width=25, height=2, bg="red", fg="white",
                             command=lambda: controller.show_frame(register_user_screen))
-        button9.pack()
-        button9.place(x=275, y=300)
+        button10.pack()
+        button10.place(x=485, y=300)
 
 
 class UGV_Vehicle_Control(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        tk.Frame.configure(self)
-        tk.Label(self, text="UGV Vehicle Control", bg="#093d81", fg="white", font=("Calibri", 13),
+        tk.Label(self, text="DBW Module", bg="#093d81", fg="white", font=("Calibri", 13),
                  width=80, height=2).grid(row=0)
-        load = Image.open("img/UGV_vehicle_control.png")
+        load = Image.open("img/DBW_Module.png")
+        render = ImageTk.PhotoImage(load)
+        img = tk.Label(self, image=render)
+        img.image = render
+        img.grid(row=2, sticky=tk.N)
+        UGV_Vehicle_Control_back_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
+                                                    command=lambda: controller.show_frame(startPage))
+        UGV_Vehicle_Control_back_button.grid(row=3, sticky=tk.E, padx=50)
+
+class perception_module(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        tk.Label(self, text="Perception Module", bg="#093d81", fg="white", font=("Calibri", 13),
+                 width=80, height=2).grid(row=0)
+
+class obstacleDetectionModule(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        tk.Label(self, text="Obstacle Detection Module", bg="#093d81", fg="white", font=("Calibri", 13),
+                 width=80, height=2).grid(row=0)
+        load = Image.open("img/obstacle_detection_module.png")
         render = ImageTk.PhotoImage(load)
         img = tk.Label(self, image=render)
         img.image = render
@@ -192,7 +213,6 @@ class UGV_Vehicle_Control(tk.Frame):
         UGV_Vehicle_Control_back_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
                                                     command=lambda: controller.show_frame(startPage))
         UGV_Vehicle_Control_back_button.grid(row=3, sticky=tk.E, padx=40)
-
 
 class Bullet(tk.Frame):
     def calculate(self):
