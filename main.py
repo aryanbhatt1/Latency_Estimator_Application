@@ -1,9 +1,10 @@
 # Created By Team SumShakti
 
 # importing libraries
+import math
+import os
 import tkinter as tk
-from tkinter import ttk
-import math, os
+
 from PIL import ImageTk, Image
 
 
@@ -131,6 +132,7 @@ class log_in(tk.Frame):
             if password1 in verify:
                 controller.show_frame(startPage)
 
+
 # first window frame startPage
 class startPage(tk.Frame):
     def __init__(self, parent, controller):
@@ -148,7 +150,7 @@ class startPage(tk.Frame):
         button2.place(x=275, y=75)
 
         button3 = tk.Button(self, text="UGV Vehicle Control", width=20, height=2, bg="#093d81", fg="white",
-                            command=lambda :controller.show_frame(UGV_Vehicle_Control))
+                            command=lambda: controller.show_frame(UGV_Vehicle_Control))
         button3.pack()
         button3.place(x=500, y=75)
 
@@ -175,8 +177,9 @@ class startPage(tk.Frame):
         button9.pack()
         button9.place(x=275, y=300)
 
+
 class UGV_Vehicle_Control(tk.Frame):
-    def __init__(self,parent,controller):
+    def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         tk.Frame.configure(self)
         tk.Label(self, text="UGV Vehicle Control", bg="#093d81", fg="white", font=("Calibri", 13),
@@ -185,9 +188,10 @@ class UGV_Vehicle_Control(tk.Frame):
         render = ImageTk.PhotoImage(load)
         img = tk.Label(self, image=render)
         img.image = render
-        img.grid(row=2,sticky=tk.N)
-        UGV_Vehicle_Control_back_button = tk.Button(self, text="Back",width=20,height=2,command=lambda:controller.show_frame(startPage))
-        UGV_Vehicle_Control_back_button.grid(row=3,sticky=tk.E,padx=40)
+        img.grid(row=2, sticky=tk.N)
+        UGV_Vehicle_Control_back_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
+                                                    command=lambda: controller.show_frame(startPage))
+        UGV_Vehicle_Control_back_button.grid(row=3, sticky=tk.E, padx=40)
 
 
 class Bullet(tk.Frame):
@@ -204,7 +208,7 @@ class Bullet(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.myText = tk.StringVar()
-        tk.Label(self, text="Choose An Option",fg="#093d81", font=("Calibri", 13), height=2).grid(row=0)
+        tk.Label(self, text="Choose An Option", fg="#093d81", font=("Calibri", 13), height=2).grid(row=0)
         tk.Label(self, text="Height (m)").grid(row=1, sticky=tk.W)
         tk.Label(self, text="Velocity (m/s)").grid(row=2, sticky=tk.W)
         tk.Label(self, text="Angle of elevation (degree)").grid(row=3, sticky=tk.W)
