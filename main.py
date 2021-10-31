@@ -30,8 +30,8 @@ class App(tk.Tk):
         self.frames = {}
 
         # iterating through a tuple consisting of the different page layouts
-        page_layout = (register_user_screen, register, log_in, startPage, Bullet, Video_Latency, UGV_Vehicle_Control,
-                       obstacleDetectionModule)
+        page_layout = (register_user_screen, startPage, Bullet, Video_Latency, UGV_Vehicle_Control,
+                       obstacleDetectionModule, perception_module, NetworkLatencyCommunicationModule,perception_module_info)
         for F in page_layout:
             frame = F(container, self)
 
@@ -56,82 +56,11 @@ class register_user_screen(tk.Frame):
         img = tk.Label(self, image=render)
         img.image = render
         img.grid(row=2, pady=70)
-        tk.Button(self, text="Login", height="2", width="30", bg="#093d81", fg="white",
-                  command=lambda: controller.show_frame(log_in)).grid(
+        tk.Button(self, text="Get In", height="2", width="30", bg="#093d81", fg="white",
+                  command=lambda: controller.show_frame(startPage)).grid(
             row=10, sticky=tk.S)
-        tk.Button(self, text="Register", height="2", width="30", bg="#093d81", fg="white",
-                  command=lambda: controller.show_frame(register)).grid(
+        tk.Button(self, text="About", height="2", width="30", bg="#093d81", fg="white").grid(
             row=13, sticky=tk.S, pady=5)
-
-
-class register(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.username = tk.StringVar()
-        self.password = tk.StringVar()
-
-        tk.Label(self, text="Please enter details below", bg="#093d81", fg="white", font=("Calibri", 13), width=80,
-                 height=2).pack()
-        tk.Label(self, text="").pack()
-        self.username_lable = tk.Label(self, text="Username * ", font=("Calibri", 13))
-        self.username_lable.pack()
-        self.username_entry = tk.Entry(self, font=("Calibri", 10), textvariable=self.username)
-        self.username_entry.pack()
-        self.password_lable = tk.Label(self, text="Password * ", font=("Calibri", 13))
-        self.password_lable.pack()
-        self.password_entry = tk.Entry(self, textvariable=self.password, show='*', font=("Calibri", 10))
-        self.password_entry.pack()
-        tk.Label(self, text="").pack()
-        tk.Button(self, text="Register", width=20, height=2, bg="#093d81", fg="white",
-                  command=lambda: self.register_user()).pack()
-        tk.Button(self, text="Back", width=20, height=2,
-                  command=lambda: controller.show_frame(register_user_screen)).pack(pady=8)
-
-    def register_user(self):
-        self.username_info = self.username.get()
-        self.password_info = self.password.get()
-        file = open(self.username_info, "w")
-        file.write(self.username_info + "\n")
-        file.write(self.password_info)
-        file.close()
-        self.username_entry.delete(0, tk.END)
-        self.password_entry.delete(0, tk.END)
-        tk.Label(self, text="Registration Success", fg="green", font=("calibri", 11)).pack()
-
-
-class log_in(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        tk.Label(self, text="Please enter details below to login", bg="#093d81", fg="white", font=("Calibri", 13),
-                 width=80, height=2).pack()
-        tk.Label(self, text="").pack()
-        self.username_verify = tk.StringVar()
-        self.password_verify = tk.StringVar()
-        tk.Label(self, text="Username * ", font=("Calibri", 13)).pack()
-        self.username_login_entry = tk.Entry(self, textvariable=self.username_verify, width=20)
-        self.username_login_entry.pack()
-        tk.Label(self, text="").pack()
-        tk.Label(self, text="Password * ", font=("Calibri", 13)).pack()
-        self.password_login_entry = tk.Entry(self, textvariable=self.password_verify, show='*', width=20)
-        self.password_login_entry.pack()
-        tk.Label(self, text="").pack()
-        tk.Button(self, text="Login", width=20, height=2, bg="#093d81", fg="white",
-                  command=lambda: (self.login_verify(parent, controller))).pack()
-        tk.Button(self, text="Back", width=20, height=2,
-                  command=lambda: controller.show_frame(register_user_screen)).pack(pady=8)
-
-    def login_verify(self, parent, controller):
-        username1 = self.username_verify.get()
-        password1 = self.password_verify.get()
-        self.username_login_entry.delete(0, tk.END)
-        self.password_login_entry.delete(0, tk.END)
-
-        list_of_files = os.listdir()
-        if username1 in list_of_files:
-            file1 = open(username1, "r")
-            verify = file1.read().splitlines()
-            if password1 in verify:
-                controller.show_frame(startPage)
 
 
 # first window frame startPage
@@ -146,7 +75,7 @@ class startPage(tk.Frame):
         button1.place(x=30, y=75)
 
         button2 = tk.Button(self, text="Perception Module", width=25, height=2, bg="#093d81", fg="white",
-                            command=lambda: controller.show_frame(Video_Latency))
+                            command=lambda: controller.show_frame(perception_module))
         button2.pack()
         button2.place(x=260, y=75)
 
@@ -159,7 +88,8 @@ class startPage(tk.Frame):
                             command=lambda: controller.show_frame(obstacleDetectionModule))
         button4.pack()
         button4.place(x=30, y=150)
-        button5 = tk.Button(self, text="button4", width=25, height=2, bg="#093d81", fg="white")
+        button5 = tk.Button(self, text="Network Latency Module", width=25, height=2, bg="#093d81", fg="white",
+                            command=lambda: controller.show_frame(Video_Latency))
         button5.pack()
         button5.place(x=260, y=150)
         button6 = tk.Button(self, text="button4", width=25, height=2, bg="#093d81", fg="white")
@@ -174,8 +104,8 @@ class startPage(tk.Frame):
         button9 = tk.Button(self, text="button4", width=25, height=2, bg="#093d81", fg="white")
         button9.pack()
         button9.place(x=485, y=225)
-        button10 = tk.Button(self, text="Log Out!!", width=25, height=2, bg="red", fg="white",
-                            command=lambda: controller.show_frame(register_user_screen))
+        button10 = tk.Button(self, text="Go Back!!", width=25, height=2, bg="red", fg="white",
+                             command=lambda: controller.show_frame(register_user_screen))
         button10.pack()
         button10.place(x=485, y=300)
 
@@ -194,11 +124,62 @@ class UGV_Vehicle_Control(tk.Frame):
                                                     command=lambda: controller.show_frame(startPage))
         UGV_Vehicle_Control_back_button.grid(row=3, sticky=tk.E, padx=50)
 
+class perception_module_info(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        tk.Label(self, text="Perception Module (More Info)", bg="#093d81", fg="white",
+                 font=("Calibri", 13), width=80, height=2).grid(row=0)
+        load = Image.open("img/perception_module.png")
+        render = ImageTk.PhotoImage(load)
+        img = tk.Label(self, image=render)
+        img.image = render
+        img.grid(row=2, sticky=tk.E)
+        Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
+                                command=lambda: controller.show_frame(startPage))
+        Home_button.grid(row=3, sticky=tk.E, padx=60, pady=80)
+        Back_button = tk.Button(self, text="Back", bg="#154c79", fg="white", width=20, height=2,
+                                command=lambda: controller.show_frame(perception_module))
+        Back_button.grid(row=3, sticky=tk.W, padx=300, pady=80)
+
 class perception_module(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        tk.Label(self, text="Perception Module", bg="#093d81", fg="white", font=("Calibri", 13),
-                 width=80, height=2).grid(row=0)
+        tk.Label(self, text="Perception Module", fg="#093d81", font=("Calibri", 13), padx=10,
+                 height=2).grid(row=0,sticky=tk.W)
+        tk.Label(self, text="Analogue Camera", fg="#093d81", font=("Calibri", 13), padx=10,pady=5,
+                 height=2).grid(row=1,sticky=tk.W)
+        self.myText = tk.StringVar()
+        tk.Label(self, text="Frame Width").grid(row=2, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="Frame Height").grid(row=3, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="FPS").grid(row=4, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="Result:").grid(row=5, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="", textvariable=self.myText).grid(row=5, pady=5, column=1, sticky=tk.W)
+
+        self.e1 = tk.Entry(self)
+        self.e2 = tk.Entry(self)
+        self.e3 = tk.Entry(self)
+
+        self.e1.grid(row=2, column=1)
+        self.e2.grid(row=3, column=1)
+        self.e3.grid(row=4, column=1)
+
+        self.e1.insert(0, "1280")
+        self.e2.insert(0, "960")
+        self.e3.insert(0, "60")
+
+        b = tk.Button(self, text="Calculate", height=2, bg="#093d81", fg="white",
+                      command=lambda: self.calculate_perception_module_latency())
+        b.grid(row=6, column=1, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S)
+        Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
+                                command=lambda: controller.show_frame(startPage))
+        Home_button.grid(row=8, column=1, sticky=tk.E, pady=160)
+        More_Info = tk.Button(self, text="More Info", bg="#1e81b0", fg="white", width=20, height=2,
+                              command=lambda: controller.show_frame(perception_module_info))
+        More_Info.grid(row=8, column=0, sticky=tk.E, pady=160,padx=5)
+
+    def calculate_perception_module_latency(self):
+        digital_latency = ((int(self.e2.get())*int(self.e1.get())*int(self.e3.get())*0.6*12)/(125*(10**8)))*1000
+        self.myText.set(str(round(digital_latency, 4)) + " ms")
 
 class obstacleDetectionModule(tk.Frame):
     def __init__(self, parent, controller):
@@ -213,6 +194,7 @@ class obstacleDetectionModule(tk.Frame):
         UGV_Vehicle_Control_back_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
                                                     command=lambda: controller.show_frame(startPage))
         UGV_Vehicle_Control_back_button.grid(row=3, sticky=tk.E, padx=40)
+
 
 class Bullet(tk.Frame):
     def calculate(self):
@@ -252,32 +234,65 @@ class Bullet(tk.Frame):
         self.e4.insert(0, "0")
 
         b = tk.Button(self, text="Calculate", command=lambda: self.calculate())
-        b.grid(row=0, column=2, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S, padx=5, pady=5)
+        b.grid(row=0, column=1, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S, padx=5, pady=5)
+
+
+class NetworkLatencyCommunicationModule(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        tk.Label(self, text="Network Latency Communication Module (More Info)", bg="#093d81", fg="white",
+                 font=("Calibri", 13),
+                 width=80, height=2).grid(row=0)
+        load = Image.open("img/network_latency_communication_module.png")
+        render = ImageTk.PhotoImage(load)
+        img = tk.Label(self, image=render)
+        img.image = render
+        img.grid(row=2, sticky=tk.E)
+        Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
+                                command=lambda: controller.show_frame(startPage))
+        Home_button.grid(row=3, sticky=tk.E, padx=60, pady=180)
+        Back_button = tk.Button(self, text="Back", bg="#154c79", fg="white", width=20, height=2,
+                                command=lambda: controller.show_frame(Video_Latency))
+        Back_button.grid(row=3, sticky=tk.W, padx=260, pady=180)
 
 
 class Video_Latency(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        tk.Label(self, text="Network Latency Communication Module", fg="#093d81", font=("Calibri", 13), padx=80,
+                 height=2).grid(row=0)
         self.myText = tk.StringVar()
-        tk.Label(self, text="Stages").grid(row=0, sticky=tk.W)
-        tk.Label(self, text="MB per line").grid(row=1, sticky=tk.W)
-        tk.Label(self, text="System Clock").grid(row=2, sticky=tk.W)
-        tk.Label(self, text="Distance").grid(row=3, sticky=tk.W)
-        tk.Label(self, text="Result:").grid(row=4, sticky=tk.W)
-        tk.Label(self, text="", textvariable=self.myText).grid(row=4, column=1, sticky=tk.W)
+        tk.Label(self, text="Frame Width").grid(row=1, padx=80, pady=5, sticky=tk.W)
+        tk.Label(self, text="Frame Height").grid(row=2, padx=80, pady=5, sticky=tk.W)
+        tk.Label(self, text="FPS").grid(row=3, padx=80, pady=5, sticky=tk.W)
+        tk.Label(self, text="Distance").grid(row=4, padx=80, pady=5, sticky=tk.W)
+        tk.Label(self, text="Result:").grid(row=5, padx=80, pady=5, sticky=tk.W)
+        tk.Label(self, text="", textvariable=self.myText).grid(row=5, pady=5, column=1, sticky=tk.W)
 
         self.e1 = tk.Entry(self)
         self.e2 = tk.Entry(self)
         self.e3 = tk.Entry(self)
         self.e4 = tk.Entry(self)
 
-        self.e1.grid(row=0, column=1)
-        self.e2.grid(row=1, column=1)
-        self.e3.grid(row=2, column=1)
-        self.e4.grid(row=3, column=1)
-        b = tk.Button(self, text="Calculate", command=lambda: self.calculate_latency())
-        b.grid(row=0, column=2, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S, padx=5, pady=5)
+        self.e1.grid(row=1, column=1)
+        self.e2.grid(row=2, column=1)
+        self.e3.grid(row=3, column=1)
+        self.e4.grid(row=4, column=1)
+        self.e1.insert(0, "1280")
+        self.e2.insert(0,"960")
+        self.e3.insert(0,"60")
+
+
+        b = tk.Button(self, text="Calculate", height=2, bg="#093d81", fg="white",
+                      command=lambda: self.calculate_latency())
+        b.grid(row=6, column=1, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S)
+        Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
+                                command=lambda: controller.show_frame(startPage))
+        Home_button.grid(row=8, column=1, sticky=tk.SE, pady=160)
+        More_Info = tk.Button(self, text="More Info", bg="#1e81b0", fg="white", width=20, height=2,
+                              command=lambda: controller.show_frame(NetworkLatencyCommunicationModule))
+        More_Info.grid(row=8, column=0, sticky=tk.E, pady=160, padx=40)
 
     def calculate_latency(self):
         tencode = ((int(self.e2.get()) + int(self.e1.get())) * 613) / int(self.e3.get()) / 1000
