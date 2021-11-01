@@ -137,10 +137,10 @@ class perception_module_info(tk.Frame):
         img.grid(row=2, sticky=tk.E)
         Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
                                 command=lambda: controller.show_frame(startPage))
-        Home_button.grid(row=3, sticky=tk.E, padx=60, pady=80)
+        Home_button.grid(row=3, sticky=tk.E, padx=60, pady=40)
         Back_button = tk.Button(self, text="Back", bg="#154c79", fg="white", width=20, height=2,
                                 command=lambda: controller.show_frame(perception_module))
-        Back_button.grid(row=3, sticky=tk.W, padx=300, pady=80)
+        Back_button.grid(row=3, sticky=tk.W, padx=260, pady=40)
 
 
 class perception_module(tk.Frame):
@@ -148,7 +148,7 @@ class perception_module(tk.Frame):
         tk.Frame.__init__(self, parent)
         tk.Label(self, text="Perception Module", fg="#093d81", font=("Calibri", 13), padx=10,
                  height=2).grid(row=0, sticky=tk.W)
-        tk.Label(self, text="Analogue Camera", fg="#093d81", font=("Calibri", 13), padx=10, pady=5,
+        tk.Label(self, text="Digital Camera", fg="#093d81", font=("Calibri", 13), padx=10, pady=5,
                  height=2).grid(row=1, sticky=tk.W)
         self.myText = tk.StringVar()
         tk.Label(self, text="Frame Width").grid(row=2, padx=10, pady=5, sticky=tk.W)
@@ -181,7 +181,7 @@ class perception_module(tk.Frame):
 
     def calculate_perception_module_latency(self):
         digital_latency = ((int(self.e2.get()) * int(self.e1.get()) * int(self.e3.get()) * 0.6 * 12) / (
-                    125 * (10 ** 8))) * 1000
+                125 * (10 ** 8))) * 1000
         self.myText.set(str(round(digital_latency, 4)) + " ms")
 
 
@@ -214,7 +214,8 @@ class Bullet(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.myText = tk.StringVar()
-        tk.Label(self, text="Choose An Option", fg="#093d81", font=("Calibri", 13), height=2).grid(row=0)
+        tk.Label(self, text="Time Taken by Bullet to hit the target....", fg="#093d81", font=("Calibri", 13),
+                 height=2).grid(row=0)
         tk.Label(self, text="Height (m)").grid(row=1, sticky=tk.W)
         tk.Label(self, text="Velocity (m/s)").grid(row=2, sticky=tk.W)
         tk.Label(self, text="Angle of elevation (degree)").grid(row=3, sticky=tk.W)
@@ -237,8 +238,11 @@ class Bullet(tk.Frame):
         self.e3.insert(0, "0")
         self.e4.insert(0, "0")
 
-        b = tk.Button(self, text="Calculate", command=lambda: self.calculate())
-        b.grid(row=0, column=1, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S, padx=5, pady=5)
+        b = tk.Button(self, text="Calculate", bg="#093d81", fg="white",width=20, height=2,command=lambda: self.calculate())
+        b.grid(row=6, column=1, sticky=tk.W + tk.E + tk.N + tk.S)
+        Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
+                                command=lambda: controller.show_frame(startPage))
+        Home_button.grid(row=7,column =2, sticky=tk.E, padx=60, pady=180)
 
 
 class NetworkLatencyCommunicationModule(tk.Frame):
@@ -283,6 +287,7 @@ class Video_Latency(tk.Frame):
         self.e2.grid(row=2, column=1)
         self.e3.grid(row=3, column=1)
         self.e4.grid(row=4, column=1)
+
         self.e1.insert(0, "1280")
         self.e2.insert(0, "960")
         self.e3.insert(0, "60")
