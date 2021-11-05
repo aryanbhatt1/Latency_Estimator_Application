@@ -242,27 +242,39 @@ class DBW_module(tk.Frame):
         # Label To store Result string
         tk.Label(self, text="", textvariable=self.myText).grid(row=5, pady=5, column=1, sticky=tk.W)
 
+        # Entry for storing value for Label Command to UGV Latency
         self.e1 = tk.Entry(self)
         self.e1.grid(row=2, column=1)
+        # Entry for storing value for Label ES Latency
         self.e2 = tk.Entry(self)
         self.e2.grid(row=3, column=1)
+        # Entry for storing value for Label Radio Latency
         self.e3 = tk.Entry(self)
         self.e3.grid(row=4, column=1)
 
+        # Default value for Entry Command to UGV Latency
         self.e1.insert(0, "35")
+        # Default value for Entry ES Latency
         self.e2.insert(0, "0.0045")
+        # Default value for Entry Radio Latency
         self.e3.insert(0, "2")
 
+        # Calculate button to call function base_station_to_ugv_latency()
         b = tk.Button(self, text="Calculate", height=2, bg="#093d81", fg="white",
                       command=lambda: self.base_station_to_ugv_latency())
         b.grid(row=9, column=1, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S)
+
+        # Button to open frame startPage
         Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
                                 command=lambda: controller.show_frame(startPage))
         Home_button.grid(row=12, column=3, pady=30, sticky=tk.W)
+
+        # Button to open frame DBW_module_info
         More_Info = tk.Button(self, text="More Info", bg="#1e81b0", fg="white", width=20, height=2,
                               command=lambda: controller.show_frame(DBW_module_info))
         More_Info.grid(row=12, column=4, pady=30, padx=5, sticky=tk.W)
 
+    # Function base_station_to_UGV_Latency
     def base_station_to_ugv_latency(self):
         total_latency = float(self.e1.get())+float(self.e2.get())+float(self.e3.get())
         self.myText.set(str(total_latency) + " ms")
