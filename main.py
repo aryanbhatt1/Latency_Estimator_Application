@@ -3,7 +3,6 @@
 # importing libraries
 import math
 import tkinter as tk
-
 from PIL import ImageTk, Image
 
 
@@ -92,18 +91,9 @@ class startPage(tk.Frame):
                             command=lambda: controller.show_frame(Video_Latency))
         button5.pack()
         button5.place(x=260, y=150)
-        button6 = tk.Button(self, text="button4", width=25, height=2, bg="#093d81", fg="white")
+        button6 = tk.Button(self, text="Over All Latency", width=25, height=2, bg="#093d81", fg="white")
         button6.pack()
         button6.place(x=485, y=150)
-        button7 = tk.Button(self, text="button4", width=25, height=2, bg="#093d81", fg="white")
-        button7.pack()
-        button7.place(x=30, y=225)
-        button8 = tk.Button(self, text="button4", width=25, height=2, bg="#093d81", fg="white")
-        button8.pack()
-        button8.place(x=260, y=225)
-        button9 = tk.Button(self, text="button4", width=25, height=2, bg="#093d81", fg="white")
-        button9.pack()
-        button9.place(x=485, y=225)
         button10 = tk.Button(self, text="Go Back!!", width=25, height=2, bg="red", fg="white",
                              command=lambda: controller.show_frame(register_user_screen))
         button10.pack()
@@ -124,6 +114,10 @@ class UGV_Vehicle_Control(tk.Frame):
                                                     command=lambda: controller.show_frame(startPage))
         UGV_Vehicle_Control_back_button.grid(row=3, sticky=tk.E, padx=50)
 
+    class DBW_module(tk.Frame):
+        def __init__(self, parent, controller):
+            tk.Frame.__init__(self, parent)
+
 
 class perception_module_info(tk.Frame):
     def __init__(self, parent, controller):
@@ -143,6 +137,11 @@ class perception_module_info(tk.Frame):
         Back_button.grid(row=3, sticky=tk.W, padx=260, pady=40)
 
 
+def calculate_x_analogue():
+    x = 1
+    return x
+
+
 class perception_module(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -154,7 +153,7 @@ class perception_module(tk.Frame):
         self.myText = tk.StringVar()
         tk.Label(self, text="Frame Width").grid(row=2, padx=10, pady=5, sticky=tk.W)
         tk.Label(self, text="Frame Height").grid(row=3, padx=10, pady=5, sticky=tk.W)
-        tk.Label(self, text="Bits/PIxel").grid(row=4, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="Bits/Pixel").grid(row=4, padx=10, pady=5, sticky=tk.W)
         tk.Label(self, text="compression %").grid(row=5, padx=10, pady=5, sticky=tk.W)
         tk.Label(self, text="FPS").grid(row=6, padx=10, pady=5, sticky=tk.W)
         tk.Label(self, text="Result:").grid(row=7, padx=10, pady=5, sticky=tk.W)
@@ -174,28 +173,58 @@ class perception_module(tk.Frame):
 
         self.e1.insert(0, "1280")
         self.e2.insert(0, "960")
-        self.e3.insert(0, "60")
-
+        self.e3.insert(0, "12")
+        self.e4.insert(0, "0.6")
+        self.e5.insert(0, "20")
         b = tk.Button(self, text="Calculate", height=2, bg="#093d81", fg="white",
                       command=lambda: self.digital_latency())
         b.grid(row=9, column=1, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S)
         Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
                                 command=lambda: controller.show_frame(startPage))
-        Home_button.grid(row=12, column=1, pady=30, sticky=tk.E)
+        Home_button.grid(row=12, column=3, pady=30, sticky=tk.W)
         More_Info = tk.Button(self, text="More Info", bg="#1e81b0", fg="white", width=20, height=2,
                               command=lambda: controller.show_frame(perception_module_info))
-        More_Info.grid(row=12, column=0, pady=30, padx=5, sticky=tk.E)
+        More_Info.grid(row=12, column=4, pady=30, padx=5, sticky=tk.W)
+
+        tk.Label(self, text="Analogue Camera", fg="#093d81", font=("Calibri", 13), padx=10, pady=5,
+                 height=2).grid(row=1, column=3, sticky=tk.W)
+        self.myText2 = tk.StringVar()
+        tk.Label(self, text="Frame Width").grid(row=2, column=3, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="Frame Height").grid(row=3, column=3, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="Bits/Pixel").grid(row=4, column=3, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="compression %").grid(row=5, column=3, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="FPS").grid(row=6, padx=10, column=3, pady=5, sticky=tk.W)
+        tk.Label(self, text="Result:").grid(row=7, padx=10, column=3, pady=5, sticky=tk.W)
+        tk.Label(self, text="", textvariable=self.myText2).grid(row=7, column=4, pady=5, sticky=tk.W)
+
+        self.e6 = tk.Entry(self)
+        self.e7 = tk.Entry(self)
+        self.e8 = tk.Entry(self)
+        self.e9 = tk.Entry(self)
+        self.e10 = tk.Entry(self)
+
+        self.e6.grid(row=2, column=4)
+        self.e7.grid(row=3, column=4)
+        self.e8.grid(row=4, column=4)
+        self.e9.grid(row=5, column=4)
+        self.e10.grid(row=6, column=4)
+        b1 = tk.Button(self, text="Calculate", height=2, bg="#093d81", fg="white",
+                       command=lambda: self.analogue_latency())
+        b1.grid(row=9, column=4, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S)
 
     def calculate_x(self):
-        x = (int(self.e2.get()) * int(self.e1.get()) * 12 * int(self.e5.get()) * 0.6) / 8000000
+        x = (float(self.e2.get()) * float(self.e1.get()) * float(self.e3.get()) * float(self.e4.get()) * float(self.e5.get()))/1000000
         return x
 
     def digital_latency(self):
-        communication_latency=10
+        communication_latency = 10
         Radio_latency = 10
-        display=50
-        d_latency = ((self.calculate_x()/100)*0.001)
-        self.myText.set(str(round(d_latency, 4)) + " ms")
+        display = 50
+        d_latency = ((self.calculate_x() / 100) * 0.001)+communication_latency+Radio_latency+display
+        self.myText.set(str(d_latency) + " ms")
+
+    def analogue_latency(self):
+        communication_late = 10
 
 
 class obstacleDetectionModule(tk.Frame):
