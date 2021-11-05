@@ -50,7 +50,7 @@ class App(tk.Tk):
         frame = self.frames[cont]
         frame.tkraise()
 
-
+# User Screen Class
 class register_user_screen(tk.Frame):
 
     # __init__ function for class register_user_screen
@@ -194,37 +194,59 @@ class Bullet(tk.Frame):
                                 command=lambda: controller.show_frame(startPage))
         Home_button.grid(row=7, column=2, sticky=tk.E, padx=60, pady=180)
 
+    # Function to calculate Time taken by bullet to hit the Target
     def calculate(self):
+
+        # variable to store calculated time1
         time = int(self.e4.get()) / int(self.e2.get()) * math.cos(int(self.e3.get()))
+        # value of g (gravity)
         g = 9.8
+
+        # variable to store calculated time2
         time2 = (math.sqrt(
             2 * g * int(self.e1.get()) + math.pow((int(self.e2.get()) * math.sin(int(self.e3.get()))), 2))) / g
+
         if time2 >= time:
             self.myText.set(str(round(time, 4)) + " sec")
         else:
             self.myText.set("Not Possible")
 
+# Class DBW Module
 class DBW_module(tk.Frame):
 
+    # __init__ function for DBW_module class
     def __init__(self, parent, controller):
+
+        # __init__ function for Tk Class
         tk.Frame.__init__(self, parent)
+
+        # Header Label For DBW module
         tk.Label(self, text="DBW Module", fg="#093d81", font=("Calibri", 13), padx=10,
                  height=2).grid(row=0, sticky=tk.W)
+
+        # Base Station to UGV Latency
         tk.Label(self, text="Base Station to UGV Latency", fg="#093d81", font=("Calibri", 13), padx=10, pady=5,
                  height=2).grid(row=1, sticky=tk.W)
+
+        # String for storing Base Station to UGV Latency
         self.myText = tk.StringVar()
+
+        # Label Command to UGV Latency
         tk.Label(self, text="Command to UGV Latency").grid(row=2, padx=10, pady=5, sticky=tk.W)
+        # Label ES Latency
         tk.Label(self, text="ES Latency").grid(row=3, padx=10, pady=5, sticky=tk.W)
+        # Label Radio Latency
         tk.Label(self, text="Radio Latency").grid(row=4, padx=10, pady=5, sticky=tk.W)
+        # Label Result
         tk.Label(self, text="Result:").grid(row=5, padx=10, pady=5, sticky=tk.W)
+        # Label To store Result string
         tk.Label(self, text="", textvariable=self.myText).grid(row=5, pady=5, column=1, sticky=tk.W)
 
         self.e1 = tk.Entry(self)
-        self.e2 = tk.Entry(self)
-        self.e3 = tk.Entry(self)
-
         self.e1.grid(row=2, column=1)
+        self.e2 = tk.Entry(self)
         self.e2.grid(row=3, column=1)
+        self.e3 = tk.Entry(self)
         self.e3.grid(row=4, column=1)
 
         self.e1.insert(0, "35")
