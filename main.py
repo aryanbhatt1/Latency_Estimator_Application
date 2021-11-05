@@ -34,7 +34,7 @@ class App(tk.Tk):
         self.frames = {}
 
         # iterating through a tuple consisting of the different page layouts
-        page_layout = (register_user_screen, startPage, Bullet, CommunicationModule, DBW_module,
+        page_layout = (register_user_screen, startPage, Bullet, CommunicationModule, DBW_module, DBW_module_info,
                        obstacleDetectionModule, perception_module, NetworkLatencyCommunicationModule,
                        perception_module_info)
         for F in page_layout:
@@ -176,13 +176,13 @@ class Bullet(tk.Frame):
         self.e4.grid(row=4, column=1)
 
         # Default Value for Height
-        self.e1.insert(0, "0")
+        self.e1.insert(0, "2")
         # Default Value for Velocity
-        self.e2.insert(0, "0")
+        self.e2.insert(0, "100")
         # Default Value for Angle of Elevation
-        self.e3.insert(0, "0")
+        self.e3.insert(0, "30")
         # Default Value for Distance
-        self.e4.insert(0, "0")
+        self.e4.insert(0, "50")
 
         # Button for calculating Latency for bullet to hit the target
         b = tk.Button(self, text="Calculate", bg="#093d81", fg="white", width=20, height=2,
@@ -255,7 +255,7 @@ class DBW_module(tk.Frame):
         # Default value for Entry Command to UGV Latency
         self.e1.insert(0, "35")
         # Default value for Entry ES Latency
-        self.e2.insert(0, "0.0045")
+        self.e2.insert(0, "10")
         # Default value for Entry Radio Latency
         self.e3.insert(0, "2")
 
@@ -311,50 +311,85 @@ class DBW_module_info(tk.Frame):
 # Perception Module Frame Page
 class perception_module(tk.Frame):
 
+    # __init__ function for perception_module Class
     def __init__(self, parent, controller):
+
+        # __init__ function for class TK
         tk.Frame.__init__(self, parent)
+
+        # Header Label For Perception Module
         tk.Label(self, text="Perception Module", fg="#093d81", font=("Calibri", 13), padx=10,
                  height=2).grid(row=0, sticky=tk.W)
+
+        # Header Label For Digital Camera
         tk.Label(self, text="Digital Camera", fg="#093d81", font=("Calibri", 13), padx=10, pady=5,
                  height=2).grid(row=1, sticky=tk.W)
+
+        # String to Store Calculated value for Digital Camera Latency
         self.myText = tk.StringVar()
+
+        # Label For Frame Width
         tk.Label(self, text="Frame Width").grid(row=2, padx=10, pady=5, sticky=tk.W)
+        # Label For Frame Height
         tk.Label(self, text="Frame Height").grid(row=3, padx=10, pady=5, sticky=tk.W)
+        # Label For Bits/pixel
         tk.Label(self, text="Bits/Pixel").grid(row=4, padx=10, pady=5, sticky=tk.W)
+        # Label For compression Ratio
         tk.Label(self, text="compression %").grid(row=5, padx=10, pady=5, sticky=tk.W)
+        # Label For FPS
         tk.Label(self, text="FPS").grid(row=6, padx=10, pady=5, sticky=tk.W)
+        # Label For Result
         tk.Label(self, text="Result:").grid(row=7, padx=10, pady=5, sticky=tk.W)
+        # Label to Store Calculated Value
         tk.Label(self, text="", textvariable=self.myText).grid(row=7, pady=5, column=1, sticky=tk.W)
 
+        # Entry for storing value for Label Frame Width
         self.e1 = tk.Entry(self)
-        self.e2 = tk.Entry(self)
-        self.e3 = tk.Entry(self)
-        self.e4 = tk.Entry(self)
-        self.e5 = tk.Entry(self)
-
         self.e1.grid(row=2, column=1)
+        # Entry for storing value for Label Frame Height
+        self.e2 = tk.Entry(self)
         self.e2.grid(row=3, column=1)
+        # Entry for storing value for Label Bits/Pixel
+        self.e3 = tk.Entry(self)
         self.e3.grid(row=4, column=1)
+        # Entry for storing value for Label Compression %
+        self.e4 = tk.Entry(self)
         self.e4.grid(row=5, column=1)
+        # Entry for storing value for Label FPS
+        self.e5 = tk.Entry(self)
         self.e5.grid(row=6, column=1)
 
+        # Default Value For Entry self.e1 and Label Frame Width
         self.e1.insert(0, "1280")
+        # Default Value For Entry self.e2 and Label Frame Height
         self.e2.insert(0, "960")
+        # Default Value For Entry self.e3 and Label Bits/Pixel
         self.e3.insert(0, "12")
+        # Default Value For Entry self.e4 and Label Compression %
         self.e4.insert(0, "0.6")
+        # Default Value For Entry self.e5 and Label FPS
         self.e5.insert(0, "20")
+
+        # Button to call function digital_latency()
         b = tk.Button(self, text="Calculate", height=2, bg="#093d81", fg="white",
                       command=lambda: self.digital_latency())
         b.grid(row=9, column=1, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S)
+
+        # Button to show Frame startPage
         Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
                                 command=lambda: controller.show_frame(startPage))
         Home_button.grid(row=12, column=3, pady=30, sticky=tk.W)
+
+        # Button to show Frame perception_module_info
         More_Info = tk.Button(self, text="More Info", bg="#1e81b0", fg="white", width=20, height=2,
                               command=lambda: controller.show_frame(perception_module_info))
         More_Info.grid(row=12, column=4, pady=30, padx=5, sticky=tk.W)
 
+        # Header Label For Analogue Camera
         tk.Label(self, text="Analogue Camera", fg="#093d81", font=("Calibri", 13), padx=10, pady=5,
                  height=2).grid(row=1, column=3, sticky=tk.W)
+
+        # String to store calculated value of Analogue Camera Latency
         self.myText2 = tk.StringVar()
         tk.Label(self, text="Frame Width").grid(row=2, column=3, padx=10, pady=5, sticky=tk.W)
         tk.Label(self, text="Frame Height").grid(row=3, column=3, padx=10, pady=5, sticky=tk.W)
