@@ -12,7 +12,6 @@ import math
 import tkinter as tk
 from PIL import ImageTk, Image
 
-
 # Class App
 class App(tk.Tk):
 
@@ -165,26 +164,32 @@ class Bullet(tk.Frame):
 
         # Entry for storing value for Label Height
         self.e1 = tk.Entry(self)
+        self.e1.grid(row=1, column=1)
         # Entry for storing value for Label Velocity
         self.e2 = tk.Entry(self)
+        self.e2.grid(row=2, column=1)
         # Entry for storing value for Label Angle of Elevation
         self.e3 = tk.Entry(self)
+        self.e3.grid(row=3, column=1)
         # Entry for storing value for Label Distance
         self.e4 = tk.Entry(self)
-
-        self.e1.grid(row=1, column=1)
-        self.e2.grid(row=2, column=1)
-        self.e3.grid(row=3, column=1)
         self.e4.grid(row=4, column=1)
 
+        # Default Value for Height
         self.e1.insert(0, "0")
+        # Default Value for Velocity
         self.e2.insert(0, "0")
+        # Default Value for Angle of Elevation
         self.e3.insert(0, "0")
+        # Default Value for Distance
         self.e4.insert(0, "0")
 
+        # Button for calculating Latency for bullet to hit the target
         b = tk.Button(self, text="Calculate", bg="#093d81", fg="white", width=20, height=2,
                       command=lambda: self.calculate())
         b.grid(row=6, column=1, sticky=tk.W + tk.E + tk.N + tk.S)
+
+        # Home Button for navigating to Main Screen or Start Page
         Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
                                 command=lambda: controller.show_frame(startPage))
         Home_button.grid(row=7, column=2, sticky=tk.E, padx=60, pady=180)
