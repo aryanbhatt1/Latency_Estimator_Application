@@ -144,6 +144,7 @@ class perception_module_info(tk.Frame):
 
 
 class perception_module(tk.Frame):
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         tk.Label(self, text="Perception Module", fg="#093d81", font=("Calibri", 13), padx=10,
@@ -153,36 +154,48 @@ class perception_module(tk.Frame):
         self.myText = tk.StringVar()
         tk.Label(self, text="Frame Width").grid(row=2, padx=10, pady=5, sticky=tk.W)
         tk.Label(self, text="Frame Height").grid(row=3, padx=10, pady=5, sticky=tk.W)
-        tk.Label(self, text="FPS").grid(row=4, padx=10, pady=5, sticky=tk.W)
-        tk.Label(self, text="Result:").grid(row=5, padx=10, pady=5, sticky=tk.W)
-        tk.Label(self, text="", textvariable=self.myText).grid(row=5, pady=5, column=1, sticky=tk.W)
+        tk.Label(self, text="Bits/PIxel").grid(row=4, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="compression %").grid(row=5, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="FPS").grid(row=6, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="Result:").grid(row=7, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="", textvariable=self.myText).grid(row=7, pady=5, column=1, sticky=tk.W)
 
         self.e1 = tk.Entry(self)
         self.e2 = tk.Entry(self)
         self.e3 = tk.Entry(self)
+        self.e4 = tk.Entry(self)
+        self.e5 = tk.Entry(self)
 
         self.e1.grid(row=2, column=1)
         self.e2.grid(row=3, column=1)
         self.e3.grid(row=4, column=1)
+        self.e4.grid(row=5, column=1)
+        self.e5.grid(row=6, column=1)
 
         self.e1.insert(0, "1280")
         self.e2.insert(0, "960")
         self.e3.insert(0, "60")
 
         b = tk.Button(self, text="Calculate", height=2, bg="#093d81", fg="white",
-                      command=lambda: self.calculate_perception_module_latency())
-        b.grid(row=6, column=1, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S)
+                      command=lambda: self.digital_latency())
+        b.grid(row=9, column=1, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S)
         Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
                                 command=lambda: controller.show_frame(startPage))
-        Home_button.grid(row=8, column=1, sticky=tk.E, pady=160)
+        Home_button.grid(row=12, column=1, pady=30, sticky=tk.E)
         More_Info = tk.Button(self, text="More Info", bg="#1e81b0", fg="white", width=20, height=2,
                               command=lambda: controller.show_frame(perception_module_info))
-        More_Info.grid(row=8, column=0, sticky=tk.E, pady=160, padx=5)
+        More_Info.grid(row=12, column=0, pady=30, padx=5, sticky=tk.E)
 
-    def calculate_perception_module_latency(self):
-        digital_latency = ((int(self.e2.get()) * int(self.e1.get()) * int(self.e3.get()) * 0.6 * 12) / (
-                125 * (10 ** 8))) * 1000
-        self.myText.set(str(round(digital_latency, 4)) + " ms")
+    def calculate_x(self):
+        x = (int(self.e2.get()) * int(self.e1.get()) * 12 * int(self.e5.get()) * 0.6) / 8000000
+        return x
+
+    def digital_latency(self):
+        communication_latency=10
+        Radio_latency = 10
+        display=50
+        d_latency = ((self.calculate_x()/100)*0.001)
+        self.myText.set(str(round(d_latency, 4)) + " ms")
 
 
 class obstacleDetectionModule(tk.Frame):
@@ -238,11 +251,12 @@ class Bullet(tk.Frame):
         self.e3.insert(0, "0")
         self.e4.insert(0, "0")
 
-        b = tk.Button(self, text="Calculate", bg="#093d81", fg="white",width=20, height=2,command=lambda: self.calculate())
+        b = tk.Button(self, text="Calculate", bg="#093d81", fg="white", width=20, height=2,
+                      command=lambda: self.calculate())
         b.grid(row=6, column=1, sticky=tk.W + tk.E + tk.N + tk.S)
         Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
                                 command=lambda: controller.show_frame(startPage))
-        Home_button.grid(row=7,column =2, sticky=tk.E, padx=60, pady=180)
+        Home_button.grid(row=7, column=2, sticky=tk.E, padx=60, pady=180)
 
 
 class NetworkLatencyCommunicationModule(tk.Frame):
