@@ -28,7 +28,7 @@ class App(tk.Tk):
         self.frames = {}
 
         # iterating through a tuple consisting of the different page layouts
-        page_layout = (register_user_screen, startPage, Bullet, Video_Latency, DBW_module,
+        page_layout = (register_user_screen, startPage, Bullet, CommunicationModule, DBW_module,
                        obstacleDetectionModule, perception_module, NetworkLatencyCommunicationModule,
                        perception_module_info)
         for F in page_layout:
@@ -112,13 +112,13 @@ class startPage(tk.Frame):
         button4.place(x=30, y=150)
 
         # Button for Network Latency Module or communication Module Class
-        button5 = tk.Button(self, text="Network Latency Module", width=25, height=2, bg="#093d81", fg="white",
-                            command=lambda: controller.show_frame(Video_Latency))
+        button5 = tk.Button(self, text="Communication Module", width=25, height=2, bg="#093d81", fg="white",
+                            command=lambda: controller.show_frame(CommunicationModule))
         button5.pack()
         button5.place(x=260, y=150)
 
         # Button for Over all Latency class
-        button6 = tk.Button(self, text="Over All Latency", width=25, height=2, bg="#093d81", fg="white")
+        button6 = tk.Button(self, text="Total Latency", width=25, height=2, bg="#093d81", fg="white")
         button6.pack()
         button6.place(x=485, y=150)
 
@@ -129,8 +129,50 @@ class startPage(tk.Frame):
         button10.place(x=485, y=300)
 
 
-# DBW Module frame Page
 class DBW_module(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        tk.Label(self, text="DBW Module", fg="#093d81", font=("Calibri", 13), padx=10,
+                 height=2).grid(row=0, sticky=tk.W)
+        tk.Label(self, text="Base Station to UGV Latency", fg="#093d81", font=("Calibri", 13), padx=10, pady=5,
+                 height=2).grid(row=1, sticky=tk.W)
+        self.myText = tk.StringVar()
+        tk.Label(self, text="Command to UGV Latency").grid(row=2, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="ES Latency").grid(row=3, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="Radio Latency").grid(row=4, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="Result:").grid(row=5, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="", textvariable=self.myText).grid(row=5, pady=5, column=1, sticky=tk.W)
+
+        self.e1 = tk.Entry(self)
+        self.e2 = tk.Entry(self)
+        self.e3 = tk.Entry(self)
+
+        self.e1.grid(row=2, column=1)
+        self.e2.grid(row=3, column=1)
+        self.e3.grid(row=4, column=1)
+
+        self.e1.insert(0, "35")
+        self.e2.insert(0, "0.0045")
+        self.e3.insert(0, "2")
+
+        b = tk.Button(self, text="Calculate", height=2, bg="#093d81", fg="white",
+                      command=lambda: self.base_station_to_ugv_latency())
+        b.grid(row=9, column=1, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S)
+        Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
+                                command=lambda: controller.show_frame(startPage))
+        Home_button.grid(row=12, column=3, pady=30, sticky=tk.W)
+        More_Info = tk.Button(self, text="More Info", bg="#1e81b0", fg="white", width=20, height=2,
+                              command=lambda: controller.show_frame(DBW_module_info))
+        More_Info.grid(row=12, column=4, pady=30, padx=5, sticky=tk.W)
+
+    def base_station_to_ugv_latency(self):
+        total_latency = float(self.e1.get())+float(self.e2.get())+float(self.e3.get())
+        self.myText.set(str(total_latency) + " ms")
+        return total_latency
+
+# DBW Module frame Page
+class DBW_module_info(tk.Frame):
 
     # __init__ function for DBW_module class
     def __init__(self, parent, controller):
@@ -155,38 +197,8 @@ class DBW_module(tk.Frame):
                                            command=lambda: controller.show_frame(startPage))
         DBW_module_back_button.grid(row=3, sticky=tk.E, padx=50)
 
-# Perception Module Page
-class perception_module_info(tk.Frame):
 
-    # __init__ function for perception_module_info class
-    def __init__(self, parent, controller):
-        # __init__ function for Tk class
-        tk.Frame.__init__(self, parent)
-
-        # Header Label For class Perception Module(info) with properties
-        tk.Label(self, text="Perception Module (More Info)", bg="#093d81", fg="white",
-                 font=("Calibri", 13), width=80, height=2).grid(row=0)
-
-        # Loading Perception Module in the tkinter frame
-        load = Image.open("img/perception_module.png")
-
-        # Rendering loaded image in the frame
-        render = ImageTk.PhotoImage(load)
-        img = tk.Label(self, image=render)
-        img.image = render
-        img.grid(row=2, sticky=tk.E)
-
-        # Button for "Main Screen" Frame
-        Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
-                                command=lambda: controller.show_frame(startPage))
-        Home_button.grid(row=3, sticky=tk.E, padx=60, pady=40)
-
-        # Back button for "Perception Module" Frame
-        Back_button = tk.Button(self, text="Back", bg="#154c79", fg="white", width=20, height=2,
-                                command=lambda: controller.show_frame(perception_module))
-        Back_button.grid(row=3, sticky=tk.W, padx=260, pady=40)
-
-
+# Perception Module Frame Page
 class perception_module(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -273,6 +285,38 @@ class perception_module(tk.Frame):
         communication_late = 10
 
 
+# Perception Module Page
+class perception_module_info(tk.Frame):
+
+    # __init__ function for perception_module_info class
+    def __init__(self, parent, controller):
+        # __init__ function for Tk class
+        tk.Frame.__init__(self, parent)
+
+        # Header Label For class Perception Module(info) with properties
+        tk.Label(self, text="Perception Module (More Info)", bg="#093d81", fg="white",
+                 font=("Calibri", 13), width=80, height=2).grid(row=0)
+
+        # Loading Perception Module in the tkinter frame
+        load = Image.open("img/perception_module.png")
+
+        # Rendering loaded image in the frame
+        render = ImageTk.PhotoImage(load)
+        img = tk.Label(self, image=render)
+        img.image = render
+        img.grid(row=2, sticky=tk.E)
+
+        # Button for "Main Screen" Frame
+        Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
+                                command=lambda: controller.show_frame(startPage))
+        Home_button.grid(row=3, sticky=tk.E, padx=60, pady=40)
+
+        # Back button for "Perception Module" Frame
+        Back_button = tk.Button(self, text="Back", bg="#154c79", fg="white", width=20, height=2,
+                                command=lambda: controller.show_frame(perception_module))
+        Back_button.grid(row=3, sticky=tk.W, padx=260, pady=40)
+
+
 class obstacleDetectionModule(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -349,15 +393,15 @@ class NetworkLatencyCommunicationModule(tk.Frame):
                                 command=lambda: controller.show_frame(startPage))
         Home_button.grid(row=3, sticky=tk.E, padx=60, pady=180)
         Back_button = tk.Button(self, text="Back", bg="#154c79", fg="white", width=20, height=2,
-                                command=lambda: controller.show_frame(Video_Latency))
+                                command=lambda: controller.show_frame(CommunicationModule))
         Back_button.grid(row=3, sticky=tk.W, padx=260, pady=180)
 
 
-class Video_Latency(tk.Frame):
+class CommunicationModule(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        tk.Label(self, text="Network Latency Communication Module", fg="#093d81", font=("Calibri", 13), padx=80,
+        tk.Label(self, text="Communication Module", fg="#093d81", font=("Calibri", 13), padx=80,
                  height=2).grid(row=0)
         self.myText = tk.StringVar()
         tk.Label(self, text="Frame Width").grid(row=1, padx=80, pady=5, sticky=tk.W)
