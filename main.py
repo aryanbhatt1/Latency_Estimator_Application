@@ -1,4 +1,12 @@
 # Created By Team SumShakti on 18th October 2021
+"""
+Team SumShakti
+1. Aryan Bhatt
+2. Himanshu R Singh
+3. Jayesh Baibhav
+4. Jyothisman Ghatak
+5. Vivek Krishna
+"""
 
 # importing libraries
 import math
