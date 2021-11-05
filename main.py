@@ -135,6 +135,69 @@ class startPage(tk.Frame):
         button10.pack()
         button10.place(x=485, y=300)
 
+# Bullet latency Calculation Frame Page
+class Bullet(tk.Frame):
+
+    # __init__ function for Bullet Latency
+    def __init__(self, parent, controller):
+
+        # __init__ function for Tk Class
+        tk.Frame.__init__(self, parent)
+
+        # String for storing Final Latency
+        self.myText = tk.StringVar()
+
+        # Header Label For class Bullet
+        tk.Label(self, text="Time Taken by Bullet to hit the target....", fg="#093d81", font=("Calibri", 13),
+                 height=2).grid(row=0)
+        # Height Label
+        tk.Label(self, text="Height (m)").grid(row=1, sticky=tk.W)
+        # Velocity Label
+        tk.Label(self, text="Velocity (m/s)").grid(row=2, sticky=tk.W)
+        # Angle of Elevation Label
+        tk.Label(self, text="Angle of elevation (degree)").grid(row=3, sticky=tk.W)
+        # Distance Label
+        tk.Label(self, text="Distance (m)").grid(row=4, sticky=tk.W)
+        # Latency result Label
+        tk.Label(self, text="Result : ").grid(row=5, sticky=tk.W)
+        # Label for displaying string myText
+        tk.Label(self, text="", textvariable=self.myText).grid(row=5, column=1, sticky=tk.W)
+
+        # Entry for storing value for Label Height
+        self.e1 = tk.Entry(self)
+        # Entry for storing value for Label Velocity
+        self.e2 = tk.Entry(self)
+        # Entry for storing value for Label Angle of Elevation
+        self.e3 = tk.Entry(self)
+        # Entry for storing value for Label Distance
+        self.e4 = tk.Entry(self)
+
+        self.e1.grid(row=1, column=1)
+        self.e2.grid(row=2, column=1)
+        self.e3.grid(row=3, column=1)
+        self.e4.grid(row=4, column=1)
+
+        self.e1.insert(0, "0")
+        self.e2.insert(0, "0")
+        self.e3.insert(0, "0")
+        self.e4.insert(0, "0")
+
+        b = tk.Button(self, text="Calculate", bg="#093d81", fg="white", width=20, height=2,
+                      command=lambda: self.calculate())
+        b.grid(row=6, column=1, sticky=tk.W + tk.E + tk.N + tk.S)
+        Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
+                                command=lambda: controller.show_frame(startPage))
+        Home_button.grid(row=7, column=2, sticky=tk.E, padx=60, pady=180)
+
+    def calculate(self):
+        time = int(self.e4.get()) / int(self.e2.get()) * math.cos(int(self.e3.get()))
+        g = 9.8
+        time2 = (math.sqrt(
+            2 * g * int(self.e1.get()) + math.pow((int(self.e2.get()) * math.sin(int(self.e3.get()))), 2))) / g
+        if time2 >= time:
+            self.myText.set(str(round(time, 4)) + " sec")
+        else:
+            self.myText.set("Not Possible")
 
 class DBW_module(tk.Frame):
 
@@ -183,6 +246,7 @@ class DBW_module_info(tk.Frame):
 
     # __init__ function for DBW_module class
     def __init__(self, parent, controller):
+
         # __init__ function for Tk class
         tk.Frame.__init__(self, parent)
 
@@ -337,53 +401,6 @@ class obstacleDetectionModule(tk.Frame):
         UGV_Vehicle_Control_back_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
                                                     command=lambda: controller.show_frame(startPage))
         UGV_Vehicle_Control_back_button.grid(row=3, sticky=tk.E, padx=40)
-
-
-class Bullet(tk.Frame):
-    def calculate(self):
-        time = int(self.e4.get()) / int(self.e2.get()) * math.cos(int(self.e3.get()))
-        g = 9.8
-        time2 = (math.sqrt(
-            2 * g * int(self.e1.get()) + math.pow((int(self.e2.get()) * math.sin(int(self.e3.get()))), 2))) / g
-        if time2 >= time:
-            self.myText.set(str(round(time, 4)) + " sec")
-        else:
-            self.myText.set("Not Possible")
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.myText = tk.StringVar()
-        tk.Label(self, text="Time Taken by Bullet to hit the target....", fg="#093d81", font=("Calibri", 13),
-                 height=2).grid(row=0)
-        tk.Label(self, text="Height (m)").grid(row=1, sticky=tk.W)
-        tk.Label(self, text="Velocity (m/s)").grid(row=2, sticky=tk.W)
-        tk.Label(self, text="Angle of elevation (degree)").grid(row=3, sticky=tk.W)
-        tk.Label(self, text="Distance (m)").grid(row=4, sticky=tk.W)
-        tk.Label(self, text="Result : ").grid(row=5, sticky=tk.W)
-        tk.Label(self, text="", textvariable=self.myText).grid(row=5, column=1, sticky=tk.W)
-
-        self.e1 = tk.Entry(self)
-        self.e2 = tk.Entry(self)
-        self.e3 = tk.Entry(self)
-        self.e4 = tk.Entry(self)
-
-        self.e1.grid(row=1, column=1)
-        self.e2.grid(row=2, column=1)
-        self.e3.grid(row=3, column=1)
-        self.e4.grid(row=4, column=1)
-
-        self.e1.insert(0, "0")
-        self.e2.insert(0, "0")
-        self.e3.insert(0, "0")
-        self.e4.insert(0, "0")
-
-        b = tk.Button(self, text="Calculate", bg="#093d81", fg="white", width=20, height=2,
-                      command=lambda: self.calculate())
-        b.grid(row=6, column=1, sticky=tk.W + tk.E + tk.N + tk.S)
-        Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
-                                command=lambda: controller.show_frame(startPage))
-        Home_button.grid(row=7, column=2, sticky=tk.E, padx=60, pady=180)
-
 
 class NetworkLatencyCommunicationModule(tk.Frame):
     def __init__(self, parent, controller):
