@@ -28,7 +28,7 @@ class App(tk.Tk):
         self.frames = {}
 
         # iterating through a tuple consisting of the different page layouts
-        page_layout = (register_user_screen, startPage, Bullet, Video_Latency, UGV_Vehicle_Control,
+        page_layout = (register_user_screen, startPage, Bullet, Video_Latency, DBW_module,
                        obstacleDetectionModule, perception_module, NetworkLatencyCommunicationModule,
                        perception_module_info)
         for F in page_layout:
@@ -46,100 +46,145 @@ class App(tk.Tk):
 
 
 class register_user_screen(tk.Frame):
+
+    # __init__ function for class register_user_screen
     def __init__(self, parent, controller):
+        # __init__ function for class Tk
         tk.Frame.__init__(self, parent)
+
+        # Header Label For class register_user_screen with properties
         tk.Label(self, text="Welcome To Latency Estimator Application ", bg="#093d81", fg="white", font=("Calibri", 13),
                  width=80, height=2).grid(row=0)
+
+        # Loading CVRDE logo in the tkinter frame
         load = Image.open("img/cvrde-drdo-logo.png")
+
+        # Rendering loaded image in the frame
         render = ImageTk.PhotoImage(load)
         img = tk.Label(self, image=render)
         img.image = render
         img.grid(row=2, pady=70)
+
+        # button for "Main Screen" Frame
         tk.Button(self, text="Get In", height="2", width="30", bg="#093d81", fg="white",
                   command=lambda: controller.show_frame(startPage)).grid(
             row=10, sticky=tk.S)
+
+        # button for "About" Frame
         tk.Button(self, text="About", height="2", width="30", bg="#093d81", fg="white").grid(
             row=13, sticky=tk.S, pady=5)
 
 
 # first window frame startPage
 class startPage(tk.Frame):
+
+    # __init__ function for startPage class
     def __init__(self, parent, controller):
+        # __init__ function for Tk class
         tk.Frame.__init__(self, parent)
+
+        # Header Label for class startPage i.e. Main Screen
         tk.Label(self, text="Choose An Option", bg="#093d81", fg="white", font=("Calibri", 13),
                  width=80, height=2).pack()
+
+        # Button for Bullet Frame or class Bullet
         button1 = tk.Button(self, text="Bullet", width=25, height=2, bg="#093d81", fg="white",
                             command=lambda: controller.show_frame(Bullet))
         button1.pack()
         button1.place(x=30, y=75)
 
+        # Button for Class perception_module
         button2 = tk.Button(self, text="Perception Module", width=25, height=2, bg="#093d81", fg="white",
                             command=lambda: controller.show_frame(perception_module))
         button2.pack()
         button2.place(x=260, y=75)
 
+        # Button for DBW_module class
         button3 = tk.Button(self, text="DBW Module", width=25, height=2, bg="#093d81", fg="white",
-                            command=lambda: controller.show_frame(UGV_Vehicle_Control))
+                            command=lambda: controller.show_frame(DBW_module))
         button3.pack()
         button3.place(x=485, y=75)
 
+        # Button for obstacleDetectionModule class
         button4 = tk.Button(self, text="Obstacle Detection Module", width=25, height=2, bg="#093d81", fg="white",
                             command=lambda: controller.show_frame(obstacleDetectionModule))
         button4.pack()
         button4.place(x=30, y=150)
+
+        # Button for Network Latency Module or communication Module Class
         button5 = tk.Button(self, text="Network Latency Module", width=25, height=2, bg="#093d81", fg="white",
                             command=lambda: controller.show_frame(Video_Latency))
         button5.pack()
         button5.place(x=260, y=150)
+
+        # Button for Over all Latency class
         button6 = tk.Button(self, text="Over All Latency", width=25, height=2, bg="#093d81", fg="white")
         button6.pack()
         button6.place(x=485, y=150)
+
+        # Button for Go Back button
         button10 = tk.Button(self, text="Go Back!!", width=25, height=2, bg="red", fg="white",
                              command=lambda: controller.show_frame(register_user_screen))
         button10.pack()
         button10.place(x=485, y=300)
 
 
-class UGV_Vehicle_Control(tk.Frame):
+# DBW Module frame Page
+class DBW_module(tk.Frame):
+
+    # __init__ function for DBW_module class
     def __init__(self, parent, controller):
+        # __init__ function for Tk class
         tk.Frame.__init__(self, parent)
+
+        # Header Label For class DBW module with properties
         tk.Label(self, text="DBW Module", bg="#093d81", fg="white", font=("Calibri", 13),
                  width=80, height=2).grid(row=0)
+
+        # Loading DBW module in the tkinter frame
         load = Image.open("img/DBW_Module.png")
+
+        # Rendering loaded image in the frame
         render = ImageTk.PhotoImage(load)
         img = tk.Label(self, image=render)
         img.image = render
         img.grid(row=2, sticky=tk.N)
-        UGV_Vehicle_Control_back_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
-                                                    command=lambda: controller.show_frame(startPage))
-        UGV_Vehicle_Control_back_button.grid(row=3, sticky=tk.E, padx=50)
 
-    class DBW_module(tk.Frame):
-        def __init__(self, parent, controller):
-            tk.Frame.__init__(self, parent)
+        # Button for "Main Screen" Frame
+        DBW_module_back_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
+                                           command=lambda: controller.show_frame(startPage))
+        DBW_module_back_button.grid(row=3, sticky=tk.E, padx=50)
 
-
+# Perception Module Page
 class perception_module_info(tk.Frame):
+
+    # __init__ function for perception_module_info class
     def __init__(self, parent, controller):
+        # __init__ function for Tk class
         tk.Frame.__init__(self, parent)
+
+        # Header Label For class Perception Module(info) with properties
         tk.Label(self, text="Perception Module (More Info)", bg="#093d81", fg="white",
                  font=("Calibri", 13), width=80, height=2).grid(row=0)
+
+        # Loading Perception Module in the tkinter frame
         load = Image.open("img/perception_module.png")
+
+        # Rendering loaded image in the frame
         render = ImageTk.PhotoImage(load)
         img = tk.Label(self, image=render)
         img.image = render
         img.grid(row=2, sticky=tk.E)
+
+        # Button for "Main Screen" Frame
         Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
                                 command=lambda: controller.show_frame(startPage))
         Home_button.grid(row=3, sticky=tk.E, padx=60, pady=40)
+
+        # Back button for "Perception Module" Frame
         Back_button = tk.Button(self, text="Back", bg="#154c79", fg="white", width=20, height=2,
                                 command=lambda: controller.show_frame(perception_module))
         Back_button.grid(row=3, sticky=tk.W, padx=260, pady=40)
-
-
-def calculate_x_analogue():
-    x = 1
-    return x
 
 
 class perception_module(tk.Frame):
@@ -213,14 +258,15 @@ class perception_module(tk.Frame):
         b1.grid(row=9, column=4, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S)
 
     def calculate_x(self):
-        x = (float(self.e2.get()) * float(self.e1.get()) * float(self.e3.get()) * float(self.e4.get()) * float(self.e5.get()))/1000000
+        x = (float(self.e2.get()) * float(self.e1.get()) * float(self.e3.get()) * float(self.e4.get()) * float(
+            self.e5.get())) / 1000000
         return x
 
     def digital_latency(self):
         communication_latency = 10
         Radio_latency = 10
         display = 50
-        d_latency = ((self.calculate_x() / 100) * 0.001)+communication_latency+Radio_latency+display
+        d_latency = ((self.calculate_x() / 100) * 0.001) + communication_latency + Radio_latency + display
         self.myText.set(str(d_latency) + " ms")
 
     def analogue_latency(self):
