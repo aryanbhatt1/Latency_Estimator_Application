@@ -423,9 +423,11 @@ class perception_module(tk.Frame):
         self.m2 = 0.0
         self.m3 = 0.0
 
-        button_options = tk.Button(self, text="Select", command=lambda: self.insert_value(optionSelect))
+        button_options = tk.Button(self, text="Select", bg="#093d81", fg="white",
+                                   command=lambda: self.insert_value(optionSelect))
         button_options.grid(row=2, column=5)
-        button_options2 = tk.Button(self, text="Select", command=lambda: self.insert_value2(optionSelect2))
+        button_options2 = tk.Button(self, text="Select", bg="#093d81", fg="white",
+                                    command=lambda: self.insert_value2(optionSelect2))
         button_options2.grid(row=6, column=5)
         b1 = tk.Button(self, text="Calculate", width=17, height=2, bg="#093d81", fg="white",
                        command=lambda: self.analogue_latency())
@@ -470,8 +472,8 @@ class perception_module(tk.Frame):
     def calculate_y(self):
         latency_y = ((float(self.e8.get()) * float(self.e7.get()) * 8) / (4 / self.m1)) + (
                 (float(self.e8.get()) * float(self.e7.get()) * 8) / (4 / self.m2)) + (
-                                (float(self.e8.get()) * float(self.e7.get()) * 8) / (4 / self.m3))
-        final_y = (latency_y/1000000) * (1/100) * 1000
+                            (float(self.e8.get()) * float(self.e7.get()) * 8) / (4 / self.m3))
+        final_y = (latency_y / 1000000) * (1 / 100) * 1000
         return final_y
 
     def analogue_latency(self):
@@ -479,8 +481,9 @@ class perception_module(tk.Frame):
         video_compression = 55
         Radio_latency = 7
         display_latency = 50
-        analogue_l = video_acq+video_compression+Radio_latency+display_latency + 2*(self.calculate_y())
+        analogue_l = video_acq + video_compression + Radio_latency + display_latency + 2 * (self.calculate_y())
         self.myText2.set(str(analogue_l) + " ms")
+
 
 # Perception Module Page
 class perception_module_info(tk.Frame):
