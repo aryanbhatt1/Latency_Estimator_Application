@@ -10,7 +10,9 @@ Team SumShakti
 # importing libraries
 import math
 import tkinter as tk
+from tkinter import ttk
 from PIL import ImageTk, Image
+
 
 # Class App
 class App(tk.Tk):
@@ -49,6 +51,7 @@ class App(tk.Tk):
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+
 
 # User Screen Class
 class register_user_screen(tk.Frame):
@@ -134,6 +137,7 @@ class startPage(tk.Frame):
         button10.pack()
         button10.place(x=485, y=300)
 
+
 # Bullet latency Calculation Frame Page
 class Bullet(tk.Frame):
 
@@ -211,12 +215,12 @@ class Bullet(tk.Frame):
         else:
             self.myText.set("Not Possible")
 
+
 # Class DBW Module
 class DBW_module(tk.Frame):
 
     # __init__ function for DBW_module class
     def __init__(self, parent, controller):
-
         # __init__ function for Tk Class
         tk.Frame.__init__(self, parent)
 
@@ -276,16 +280,16 @@ class DBW_module(tk.Frame):
 
     # Function base_station_to_UGV_Latency
     def base_station_to_ugv_latency(self):
-        total_latency = float(self.e1.get())+float(self.e2.get())+float(self.e3.get())
+        total_latency = float(self.e1.get()) + float(self.e2.get()) + float(self.e3.get())
         self.myText.set(str(total_latency) + " ms")
         return total_latency
+
 
 # DBW Module frame Page
 class DBW_module_info(tk.Frame):
 
     # __init__ function for DBW_module class
     def __init__(self, parent, controller):
-
         # __init__ function for Tk class
         tk.Frame.__init__(self, parent)
 
@@ -313,7 +317,6 @@ class perception_module(tk.Frame):
 
     # __init__ function for perception_module Class
     def __init__(self, parent, controller):
-
         # __init__ function for class TK
         tk.Frame.__init__(self, parent)
 
@@ -391,33 +394,71 @@ class perception_module(tk.Frame):
 
         # String to store calculated value of Analogue Camera Latency
         self.myText2 = tk.StringVar()
-        tk.Label(self, text="Frame Width").grid(row=2, column=3, padx=10, pady=5, sticky=tk.W)
-        tk.Label(self, text="Frame Height").grid(row=3, column=3, padx=10, pady=5, sticky=tk.W)
-        tk.Label(self, text="Bits/Pixel").grid(row=4, column=3, padx=10, pady=5, sticky=tk.W)
-        tk.Label(self, text="compression %").grid(row=5, column=3, padx=10, pady=5, sticky=tk.W)
-        tk.Label(self, text="FPS").grid(row=6, padx=10, column=3, pady=5, sticky=tk.W)
+        tk.Label(self, text="Select Camera Type").grid(row=2, column=3, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="Frame Width").grid(row=3, column=3, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="Frame Height").grid(row=4, column=3, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="FPS").grid(row=5, column=3, padx=10, pady=5, sticky=tk.W)
+        tk.Label(self, text="Select Y:Cr:Cb").grid(row=6, padx=10, column=3, pady=5, sticky=tk.W)
         tk.Label(self, text="Result:").grid(row=7, padx=10, column=3, pady=5, sticky=tk.W)
         tk.Label(self, text="", textvariable=self.myText2).grid(row=7, column=4, pady=5, sticky=tk.W)
 
-        self.e6 = tk.Entry(self)
+        n = tk.StringVar()
+        n2 = tk.StringVar()
+        optionSelect = ttk.Combobox(self, width=17, textvariable=n)
+        optionSelect['values'] = ('PAL', 'NTSC')
         self.e7 = tk.Entry(self)
         self.e8 = tk.Entry(self)
         self.e9 = tk.Entry(self)
         self.e10 = tk.Entry(self)
+        optionSelect2 = ttk.Combobox(self, width=17, textvariable=n2)
+        optionSelect2['values'] = ('4:4:4', '4:4:2', '4:2:2')
 
-        self.e6.grid(row=2, column=4)
+        optionSelect.grid(column=4, row=2)
+        optionSelect.current(0)
         self.e7.grid(row=3, column=4)
         self.e8.grid(row=4, column=4)
         self.e9.grid(row=5, column=4)
-        self.e10.grid(row=6, column=4)
-        b1 = tk.Button(self, text="Calculate", height=2, bg="#093d81", fg="white",
+        optionSelect2.grid(column=4, row=6)
+        self.m1 = 0.0
+        self.m2 = 0.0
+        self.m3 = 0.0
+
+        button_options = tk.Button(self, text="Select", command=lambda: self.insert_value(optionSelect))
+        button_options.grid(row=2, column=5)
+        button_options2 = tk.Button(self, text="Select", command=lambda: self.insert_value2(optionSelect2))
+        button_options2.grid(row=6, column=5)
+        b1 = tk.Button(self, text="Calculate", width=17, height=2, bg="#093d81", fg="white",
                        command=lambda: self.analogue_latency())
-        b1.grid(row=9, column=4, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S)
+        b1.grid(row=9, column=4, sticky=tk.W + tk.E + tk.N + tk.S)
 
     def calculate_x(self):
         x = (float(self.e2.get()) * float(self.e1.get()) * float(self.e3.get()) * float(self.e4.get()) * float(
             self.e5.get())) / 1000000
         return x
+
+    def insert_value(self, optionSelect):
+        if optionSelect.get() == "PAL":
+            self.e7.insert(0, "720")
+            self.e8.insert(0, "576")
+            self.e9.insert(0, "25")
+        else:
+            self.e7.insert(0, "720")
+            self.e8.insert(0, "480")
+            self.e9.insert(0, "30")
+
+    def insert_value2(self, optionSelect2):
+        if optionSelect2.get() == '4:4:4':
+            self.m1 = 4
+            self.m2 = 4
+            self.m3 = 4
+        elif optionSelect2.get() == '4:4:2':
+            self.m1 = 4
+            self.m2 = 4
+            self.m3 = 2
+        elif optionSelect2.get() == '4:2:2':
+            self.m1 = 4
+            self.m2 = 2
+            self.m3 = 2
 
     def digital_latency(self):
         communication_latency = 10
@@ -426,9 +467,20 @@ class perception_module(tk.Frame):
         d_latency = ((self.calculate_x() / 100) * 0.001) + communication_latency + Radio_latency + display
         self.myText.set(str(d_latency) + " ms")
 
-    def analogue_latency(self):
-        communication_late = 10
+    def calculate_y(self):
+        latency_y = ((float(self.e8.get()) * float(self.e7.get()) * 8) / (4 / self.m1)) + (
+                (float(self.e8.get()) * float(self.e7.get()) * 8) / (4 / self.m2)) + (
+                                (float(self.e8.get()) * float(self.e7.get()) * 8) / (4 / self.m3))
+        final_y = (latency_y/1000000) * (1/100) * 1000
+        return final_y
 
+    def analogue_latency(self):
+        video_acq = 50
+        video_compression = 55
+        Radio_latency = 7
+        display_latency = 50
+        analogue_l = video_acq+video_compression+Radio_latency+display_latency + 2*(self.calculate_y())
+        self.myText2.set(str(analogue_l) + " ms")
 
 # Perception Module Page
 class perception_module_info(tk.Frame):
@@ -475,6 +527,7 @@ class obstacleDetectionModule(tk.Frame):
         UGV_Vehicle_Control_back_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
                                                     command=lambda: controller.show_frame(startPage))
         UGV_Vehicle_Control_back_button.grid(row=3, sticky=tk.E, padx=40)
+
 
 class NetworkLatencyCommunicationModule(tk.Frame):
     def __init__(self, parent, controller):
