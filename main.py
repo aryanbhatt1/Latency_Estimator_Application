@@ -1,4 +1,7 @@
-""" Created By Team SumShakti on 18th October 2021
+""" Created By Team SumShakti on 18th October
+
+Topic : End To End Latency Estimator
+
 Team SumShakti
 1. Aryan Bhatt
 2. Himanshu R Singh
@@ -606,17 +609,15 @@ class Total_latency(tk.Frame):
         tk.Label(self, text="Total Latency", fg="#093d81", font=("Calibri", 13), padx=80,
                  height=2).grid(row=0)
         self.myText = tk.StringVar()
-        tk.Label(self, text="Analogue Camera Latency").grid(row=1, padx=80, pady=5, sticky=tk.W)
-        tk.Label(self, text="Digital Camera Latency").grid(row=2, padx=80, pady=5, sticky=tk.W)
-        tk.Label(self, text="DBW Module Latency").grid(row=3, padx=80, pady=5, sticky=tk.W)
-        tk.Label(self, text="Result:").grid(row=4, padx=80, pady=5, sticky=tk.W)
-        tk.Label(self, text="", textvariable=self.myText).grid(row=4, pady=5, column=1, sticky=tk.W)
+        tk.Label(self, text="Perception Module Latency").grid(row=1, padx=80, pady=5, sticky=tk.W)
+        tk.Label(self, text="DBW Module Latency").grid(row=2, padx=80, pady=5, sticky=tk.W)
+        tk.Label(self, text="Result:").grid(row=3, padx=80, pady=5, sticky=tk.W)
+        tk.Label(self, text="", textvariable=self.myText).grid(row=3, pady=5, column=1, sticky=tk.W)
         self.e1 = tk.Entry(self)
         self.e2 = tk.Entry(self)
         self.e3 = tk.Entry(self)
         self.e1.grid(row=1, column=1)
         self.e2.grid(row=2, column=1)
-        self.e3.grid(row=3, column=1)
         b = tk.Button(self, text="Calculate", height=2, bg="#093d81", fg="white",
                       command=lambda: self.calculate_total_latency())
         b.grid(row=6, column=1, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S)
@@ -628,13 +629,12 @@ class Total_latency(tk.Frame):
         Home_button.grid(row=8, column=0, sticky=tk.W,padx=80, pady=80)
 
     def insert_value(self):
-        global analogue_Latency, digital_Latency
-        self.e1.insert(0, str(analogue_Latency))
-        self.e2.insert(0, str(digital_Latency))
-        self.e3.insert(0, str(DBW_module_latency))
+        global analogue_Latency, digital_Latency, DBW_module_latency
+        self.e1.insert(0, str(analogue_Latency+digital_Latency))
+        self.e2.insert(0, str(DBW_module_latency))
 
     def calculate_total_latency(self):
-        total_latency = float(self.e1.get())+float(self.e2.get())+float(self.e3.get())
+        total_latency = float(self.e1.get())+float(self.e2.get())
         self.myText.set(str(total_latency) + " ms")
 
 # Main Program;
