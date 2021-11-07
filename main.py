@@ -284,7 +284,6 @@ class DBW_module(tk.Frame):
         self.myText.set(str(total_latency) + " ms")
         return total_latency
 
-
 # DBW Module frame Page
 class DBW_module_info(tk.Frame):
 
@@ -310,7 +309,6 @@ class DBW_module_info(tk.Frame):
         DBW_module_back_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
                                            command=lambda: controller.show_frame(startPage))
         DBW_module_back_button.grid(row=3, sticky=tk.E, padx=50)
-
 
 # Perception Module Frame Page
 class perception_module(tk.Frame):
@@ -431,7 +429,7 @@ class perception_module(tk.Frame):
         button_options2.grid(row=6, column=5)
         b1 = tk.Button(self, text="Calculate", width=17, height=2, bg="#093d81", fg="white",
                        command=lambda: self.analogue_latency())
-        b1.grid(row=9, column=4, sticky=tk.W + tk.E + tk.N + tk.S)
+        b1.grid(row=9, column=4)
 
     def calculate_x(self):
         x = (float(self.e2.get()) * float(self.e1.get()) * float(self.e3.get()) * float(self.e4.get()) * float(
