@@ -432,7 +432,7 @@ class perception_module(tk.Frame):
                                     command=lambda: self.insert_value2(optionSelect2))
         button_options2.grid(row=6, column=5)
         b1 = tk.Button(self, text="Calculate", width=17, height=2, bg="#093d81", fg="white",
-                       command=lambda: self.analogue_latency(parent, controller))
+                       command=lambda: self.analogue_latency())
         b1.grid(row=9, column=4, sticky=tk.W + tk.E + tk.N + tk.S)
 
     def calculate_x(self):
@@ -480,7 +480,7 @@ class perception_module(tk.Frame):
         final_y = (latency_y / 1000000) * (1 / 100) * 1000
         return final_y
 
-    def analogue_latency(self, parent, controller):
+    def analogue_latency(self):
         video_acq = 50
         video_compression = 55
         Radio_latency = 7
