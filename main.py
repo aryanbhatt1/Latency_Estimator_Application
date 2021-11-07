@@ -13,7 +13,6 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk, Image
 
-
 # Class App
 class App(tk.Tk):
 
@@ -38,7 +37,7 @@ class App(tk.Tk):
         # iterating through a tuple consisting of the different page layouts
         page_layout = (register_user_screen, startPage, Bullet, CommunicationModule, DBW_module, DBW_module_info,
                        obstacleDetectionModule, perception_module, NetworkLatencyCommunicationModule,
-                       perception_module_info)
+                       perception_module_info, Total_latency)
         for F in page_layout:
             frame = F(container, self)
 
@@ -127,7 +126,8 @@ class startPage(tk.Frame):
         button5.place(x=260, y=150)
 
         # Button for Over all Latency class
-        button6 = tk.Button(self, text="Total Latency", width=25, height=2, bg="#093d81", fg="white")
+        button6 = tk.Button(self, text="Total Latency", width=25, height=2, bg="#093d81", fg="white",
+                            command=lambda: controller.show_frame(Total_latency))
         button6.pack()
         button6.place(x=485, y=150)
 
@@ -282,7 +282,9 @@ class DBW_module(tk.Frame):
     def base_station_to_ugv_latency(self):
         total_latency = float(self.e1.get()) + float(self.e2.get()) + float(self.e3.get())
         self.myText.set(str(total_latency) + " ms")
-        return total_latency
+        global DBW_module_latency
+        DBW_module_latency = total_latency
+
 
 # DBW Module frame Page
 class DBW_module_info(tk.Frame):
@@ -310,6 +312,7 @@ class DBW_module_info(tk.Frame):
                                            command=lambda: controller.show_frame(startPage))
         DBW_module_back_button.grid(row=3, sticky=tk.E, padx=50)
 
+
 # Perception Module Frame Page
 class perception_module(tk.Frame):
 
@@ -328,7 +331,6 @@ class perception_module(tk.Frame):
 
         # String to Store Calculated value for Digital Camera Latency
         self.myText = tk.StringVar()
-
         # Label For Frame Width
         tk.Label(self, text="Frame Width").grid(row=2, padx=10, pady=5, sticky=tk.W)
         # Label For Frame Height
@@ -420,7 +422,6 @@ class perception_module(tk.Frame):
         self.m1 = 0.0
         self.m2 = 0.0
         self.m3 = 0.0
-
         button_options = tk.Button(self, text="Select", bg="#093d81", fg="white",
                                    command=lambda: self.insert_value(optionSelect))
         button_options.grid(row=2, column=5)
@@ -428,8 +429,8 @@ class perception_module(tk.Frame):
                                     command=lambda: self.insert_value2(optionSelect2))
         button_options2.grid(row=6, column=5)
         b1 = tk.Button(self, text="Calculate", width=17, height=2, bg="#093d81", fg="white",
-                       command=lambda: self.analogue_latency())
-        b1.grid(row=9, column=4)
+                       command=lambda: self.analogue_latency(parent, controller))
+        b1.grid(row=9, column=4, sticky=tk.W + tk.E + tk.N + tk.S)
 
     def calculate_x(self):
         x = (float(self.e2.get()) * float(self.e1.get()) * float(self.e3.get()) * float(self.e4.get()) * float(
@@ -465,6 +466,8 @@ class perception_module(tk.Frame):
         Radio_latency = 10
         display = 50
         d_latency = ((self.calculate_x() / 100) * 0.001) + communication_latency + Radio_latency + display
+        global digital_Latency
+        digital_Latency = d_latency
         self.myText.set(str(d_latency) + " ms")
 
     def calculate_y(self):
@@ -474,14 +477,15 @@ class perception_module(tk.Frame):
         final_y = (latency_y / 1000000) * (1 / 100) * 1000
         return final_y
 
-    def analogue_latency(self):
+    def analogue_latency(self, parent, controller):
         video_acq = 50
         video_compression = 55
         Radio_latency = 7
         display_latency = 50
         analogue_l = video_acq + video_compression + Radio_latency + display_latency + 2 * (self.calculate_y())
         self.myText2.set(str(analogue_l) + " ms")
-
+        global analogue_Latency
+        analogue_Latency = analogue_l
 
 # Perception Module Page
 class perception_module_info(tk.Frame):
@@ -596,7 +600,47 @@ class CommunicationModule(tk.Frame):
         self.myText.set(str(t_all) + " ms")
 
 
+class Total_latency(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        tk.Label(self, text="Total Latency", fg="#093d81", font=("Calibri", 13), padx=80,
+                 height=2).grid(row=0)
+        self.myText = tk.StringVar()
+        tk.Label(self, text="Analogue Camera Latency").grid(row=1, padx=80, pady=5, sticky=tk.W)
+        tk.Label(self, text="Digital Camera Latency").grid(row=2, padx=80, pady=5, sticky=tk.W)
+        tk.Label(self, text="DBW Module Latency").grid(row=3, padx=80, pady=5, sticky=tk.W)
+        tk.Label(self, text="Result:").grid(row=4, padx=80, pady=5, sticky=tk.W)
+        tk.Label(self, text="", textvariable=self.myText).grid(row=4, pady=5, column=1, sticky=tk.W)
+        self.e1 = tk.Entry(self)
+        self.e2 = tk.Entry(self)
+        self.e3 = tk.Entry(self)
+        self.e1.grid(row=1, column=1)
+        self.e2.grid(row=2, column=1)
+        self.e3.grid(row=3, column=1)
+        b = tk.Button(self, text="Calculate", height=2, bg="#093d81", fg="white",
+                      command=lambda: self.calculate_total_latency())
+        b.grid(row=6, column=1, columnspan=2, rowspan=2, sticky=tk.W + tk.E + tk.N + tk.S)
+        b1 = tk.Button(self, text="Insert Values", width=17, height=2, bg="#093d81", fg="white",
+                       command=lambda: self.insert_value())
+        b1.grid(row=6, column=0,padx=80, columnspan=2, rowspan=2, sticky=tk.W)
+        Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
+                                command=lambda: controller.show_frame(startPage))
+        Home_button.grid(row=8, column=0, sticky=tk.W,padx=80, pady=80)
+
+    def insert_value(self):
+        global analogue_Latency, digital_Latency
+        self.e1.insert(0, str(analogue_Latency))
+        self.e2.insert(0, str(digital_Latency))
+        self.e3.insert(0, str(DBW_module_latency))
+
+    def calculate_total_latency(self):
+        total_latency = float(self.e1.get())+float(self.e2.get())+float(self.e3.get())
+        self.myText.set(str(total_latency) + " ms")
+
 # Main Program;
 if "__main__" == __name__:
+    analogue_Latency = 0.0
+    digital_Latency = 0.0
+    DBW_module_latency = 0.0
     app = App()
     app.mainloop()
