@@ -129,6 +129,10 @@ class startPage(tk.Frame):
         button6.pack()
         button6.place(x=485, y=200)
 
+class About(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
 
 class Bullet(tk.Frame):
 
@@ -563,8 +567,8 @@ class Total_latency(tk.Frame):
         tk.Label(self, text="Total Latency", bg="#093d81", fg="white", font=("Calibri", 13),
                  padx=320, height=2).grid(row=0, sticky=tk.E)
         tk.Label(self, text=" ", bg="#093d81", fg="white", font=("Calibri", 13), height=2).grid(row=1, sticky=tk.E)
-        tk.Label(self, text="DBW Module Latency (ms)").grid(row=2, pady=5, padx=20, sticky=tk.W)
-        tk.Label(self, text="Perception Module Latency (ms)").grid(row=3, pady=5, padx=20, sticky=tk.W)
+        tk.Label(self, text="Perception Module Latency (ms)").grid(row=2, pady=5, padx=20, sticky=tk.W)
+        tk.Label(self, text="DBW Module Latency (ms)").grid(row=3, pady=5, padx=20, sticky=tk.W)
         tk.Label(self, text="Total Latency (ms)").grid(row=4, padx=20, pady=5, sticky=tk.W)
         tk.Label(self, text="", textvariable=self.myText).grid(row=4, padx=305, column=0, pady=5, sticky=tk.W)
 
