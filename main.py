@@ -168,29 +168,37 @@ class Bullet(tk.Frame):
         # String for storing Final Latency
         self.myText = tk.StringVar()
 
+        # Label For Heading
         tk.Label(self, text="Time Taken By Bullet To Hit the Target", bg="#093d81", fg="white", font=("Calibri", 13),
                  padx=230, height=2).grid(row=0, sticky=tk.E)
+        # Label Blank
         tk.Label(self, text=" ", bg="#093d81", fg="white", font=("Calibri", 13), height=2).grid(row=1, sticky=tk.E)
+        # Label Height
         tk.Label(self, text="Height (m)").grid(row=2, pady=5, padx=20, sticky=tk.W)
+        # Label Velocity of Bullet
         tk.Label(self, text="Velocity of Bullet (m/s)").grid(row=3, pady=5, padx=20, sticky=tk.W)
+        # Label Angle of elevation
         tk.Label(self, text="Angle of elevation (degree)").grid(row=4, pady=5, padx=20, sticky=tk.W)
+        # Label Distance
         tk.Label(self, text="Distance (m)").grid(row=5, pady=5, padx=20, sticky=tk.W)
+        # Label Result
         tk.Label(self, text="Result:").grid(row=6, padx=20, pady=5, sticky=tk.W)
+        # Label to print Value
         tk.Label(self, text="", textvariable=self.myText).grid(row=6, padx=300, column=0, pady=5, sticky=tk.W)
 
-        # Entry for storing value for Label Generation of Operator Command
+        # Entry for storing value for Label Height
         self.e1 = tk.Entry(self)
         self.e1.grid(row=2, column=0)
 
-        # Entry for storing value for Label Encryption
+        # Entry for storing value for Label Velocity of Bullet
         self.e2 = tk.Entry(self)
         self.e2.grid(row=3, column=0)
 
-        # Entry for storing value for Label Ext. Radio (Tx to Rx)
+        # Entry for storing value for Label Angle of Elevation
         self.e3 = tk.Entry(self)
         self.e3.grid(row=4, column=0)
 
-        # Entry for storing value for Label Decryption
+        # Entry for storing value for Label Distance
         self.e4 = tk.Entry(self)
         self.e4.grid(row=5, column=0)
 
@@ -252,11 +260,11 @@ class DBW_module(tk.Frame):
 
         # Label Generation of Operator Command
         tk.Label(self, text="Generation of Operator Command (ms)").grid(row=2, pady=5, sticky=tk.W)
-        # Label Encryption
+        # Label Ethernet Switch Latency
         tk.Label(self, text="Ethernet Switch Latency (ms)").grid(row=3, pady=5, sticky=tk.W)
-        # Label Ext. Radio (Tx to Rx)
+        # Label Radio (Tx to Rx)
         tk.Label(self, text="Radio (Tx to Rx) (ms)").grid(row=4, pady=5, sticky=tk.W)
-        # Label Execution
+        # Label Command Execution
         tk.Label(self, text="Command Execution (ms)").grid(row=5, pady=5, sticky=tk.W)
         # Label result
         tk.Label(self, text="Result:").grid(row=6, pady=5, sticky=tk.W)
@@ -267,15 +275,15 @@ class DBW_module(tk.Frame):
         self.e1 = tk.Entry(self)
         self.e1.grid(row=2, column=0, padx=100)
 
-        # Entry for storing value for Label Encryption
+        # Entry for storing value for Label Ethernet Switch Latency
         self.e2 = tk.Entry(self)
         self.e2.grid(row=3, column=0, padx=100)
 
-        # Entry for storing value for Label Ext. Radio (Tx to Rx)
+        # Entry for storing value for Label Radio (Tx to Rx)
         self.e3 = tk.Entry(self)
         self.e3.grid(row=4, column=0, padx=100)
 
-        # Entry for storing value for Label Decryption
+        # Entry for storing value for Label Execution
         self.e4 = tk.Entry(self)
         self.e4.grid(row=5, column=0, padx=100)
 
@@ -356,19 +364,23 @@ class perception_module(tk.Frame):
 
         # String to Store Calculated value for Digital Camera Latency
         self.myText = tk.StringVar()
-        # Label For Frame Height
+        # Label Frame Width
         tk.Label(self, text="Frame Width (pixels)").grid(row=2, pady=5, sticky=tk.W)
+        # Label Frame Height
         tk.Label(self, text="Frame Height (pixels)").grid(row=3, pady=5, sticky=tk.W)
+        # Label Bits/Pixel
         tk.Label(self, text="Bits/Pixel").grid(row=4, pady=5, sticky=tk.W)
+        # Label Compression %
         tk.Label(self, text="Compression %").grid(row=5, pady=5, sticky=tk.W)
-        # Label For Bits/pixel
+        # Label FPS
         tk.Label(self, text="FPS").grid(row=6, pady=5, sticky=tk.W)
-        # Label For compression Ratio
+        # Label Communication Latency
         tk.Label(self, text="Communication Latency (ms)").grid(row=7, pady=5, sticky=tk.W)
-        # Label For FPS
+        # Label For Radio Latency
         tk.Label(self, text="Radio Latency").grid(row=8, pady=5, sticky=tk.W)
+        # Label Display
         tk.Label(self, text="Display").grid(row=9, pady=5, sticky=tk.W)
-        # Label For Result
+        # Label Result
         tk.Label(self, text="Result:").grid(row=10, pady=5, padx=2, sticky=tk.W)
         # Label to Store Calculated Value
         tk.Label(self, text="", textvariable=self.myText).grid(row=10, pady=5, column=0, padx=180, sticky=tk.W)
@@ -388,13 +400,17 @@ class perception_module(tk.Frame):
         # Entry for storing value for Label FPS
         self.e5 = tk.Entry(self)
         self.e5.grid(row=6, column=0, padx=180, sticky=tk.W)
+        # Entry for storing value for Label Communication Latency
         self.e6 = tk.Entry(self)
         self.e6.grid(row=7, column=0, padx=180, sticky=tk.W)
+        # Entry for storing value for Label Radio Latency
         self.e7 = tk.Entry(self)
         self.e7.grid(row=8, column=0, padx=180, sticky=tk.W)
+        # Entry for storing value for Label Display
         self.e8 = tk.Entry(self)
         self.e8.grid(row=9, column=0, padx=180, sticky=tk.W)
 
+        # Default Value for all Entries
         self.e1.insert(0, '1280')
         self.e2.insert(0, '960')
         self.e3.insert(0, '12')
@@ -409,7 +425,7 @@ class perception_module(tk.Frame):
                       command=lambda: self.digital_latency())
         b.grid(row=12, column=0, padx=180, sticky=tk.W)
 
-        # Analogue Camera
+        # Initializing StringVar
         self.myText2 = tk.StringVar()
         n = tk.StringVar()
         n2 = tk.StringVar()
@@ -417,68 +433,91 @@ class perception_module(tk.Frame):
         # Header Label For Analogue Camera
         tk.Label(self, text="Analogue Camera", fg="#093d81", font=("Calibri", 13), pady=5,
                  height=2).grid(row=1, padx=360, sticky=tk.W)
+        # Label Select Camera Type
         tk.Label(self, text="Select Camera Type").grid(row=2, padx=360, pady=5, sticky=tk.W)
+        # Label Frame Width
         tk.Label(self, text="Frame Width").grid(row=3, padx=360, pady=5, sticky=tk.W)
+        # Label Frame Height
         tk.Label(self, text="Frame Height").grid(row=4, padx=360, pady=5, sticky=tk.W)
+        # Label FPS
         tk.Label(self, text="FPS").grid(row=5, padx=360, pady=5, sticky=tk.W)
+        # Label Select Y:Cr:Cb
         tk.Label(self, text="Select Y:Cr:Cb").grid(row=6, padx=360, pady=5, sticky=tk.W)
+        # Label Acquisition
         tk.Label(self, text="Video Acquisition").grid(row=7, padx=360, pady=5, sticky=tk.W)
+        # Label Video Compression
         tk.Label(self, text="Video Compression").grid(row=8, padx=360, pady=5, sticky=tk.W)
+        # Label Radio Latency
         tk.Label(self, text="Radio Latency").grid(row=9, padx=360, pady=5, sticky=tk.W)
+        # Label Display Latency
         tk.Label(self, text="Display Latency").grid(row=10, padx=360, pady=5, sticky=tk.W)
+        # Label Result
         tk.Label(self, text="Result:").grid(row=11, padx=360, pady=5, sticky=tk.W)
+        # Label to store StringVar() self.myText2
         tk.Label(self, text="", textvariable=self.myText2).grid(row=11, padx=500, pady=5, sticky=tk.W)
 
-        # Entry for storing value for Label Frame Width
-
+        # Combobox options for Label Select Camera option
         optionSelect = ttk.Combobox(self, width=17, textvariable=n)
         optionSelect['values'] = ('PAL', 'NTSC')
         optionSelect.grid(row=2, column=0, padx=500, sticky=tk.W)
         optionSelect.current(0)
 
+        # Entry for Label Frame Width
         self.e9 = tk.Entry(self)
         self.e9.grid(row=3, column=0, padx=500, sticky=tk.W)
 
+        # Entry for Label Frame Height
         self.e10 = tk.Entry(self)
         self.e10.grid(row=4, column=0, padx=500, sticky=tk.W)
 
+        # Entry for Label FPS
         self.e11 = tk.Entry(self)
         self.e11.grid(row=5, column=0, padx=500, sticky=tk.W)
 
+        # Combobox options for Label Y:Cr:Cb
         optionSelect2 = ttk.Combobox(self, width=17, textvariable=n2)
         optionSelect2['values'] = ('4:4:4', '4:4:2', '4:2:2')
         optionSelect2.grid(row=6, column=0, padx=500, sticky=tk.W)
         optionSelect2.current(0)
 
+        # Entry For Label Video Acquisition
         self.e12 = tk.Entry(self)
         self.e12.grid(row=7, column=0, padx=500, sticky=tk.W)
 
+        # Entry For Label Video Compression
         self.e13 = tk.Entry(self)
         self.e13.grid(row=8, column=0, padx=500, sticky=tk.W)
 
+        # Entry For Label Radio Latency
         self.e14 = tk.Entry(self)
         self.e14.grid(row=9, column=0, padx=500, sticky=tk.W)
 
+        # Entry for Label Display Latency
         self.e15 = tk.Entry(self)
         self.e15.grid(row=10, column=0, padx=500, sticky=tk.W)
 
+        # Inserting default values for all Entries
         self.e12.insert(0, '50')
         self.e13.insert(0, '55')
         self.e14.insert(0, '10')
         self.e15.insert(0, '50')
 
+        # Initializing self.m1,self.m2,self.m3
         self.m1 = 0.0
         self.m2 = 0.0
         self.m3 = 0.0
 
+        # Button to select Label Select Camera Type
         button_options = tk.Button(self, text="Select", bg="#093d81", fg="white",
                                    command=lambda: self.insert_value2(optionSelect))
         button_options.grid(row=2, column=0, padx=635, sticky=tk.W)
 
+        # Button to select Label Select Y:Cr:Cb
         button_options2 = tk.Button(self, text="Select", bg="#093d81", fg="white",
                                     command=lambda: self.insert_value(optionSelect2))
         button_options2.grid(row=6, column=0, padx=635, sticky=tk.W)
 
+        # Button to Call Function self.analogue_latency()
         b = tk.Button(self, text="Calculate", height=2, width=16, bg="#093d81", fg="white",
                       command=lambda: self.analogue_latency())
         b.grid(row=12, column=0, padx=500, sticky=tk.W)
@@ -493,6 +532,7 @@ class perception_module(tk.Frame):
                               command=lambda: controller.show_frame(perception_module_info))
         More_Info.grid(row=15, column=0, pady=30, padx=360, sticky=tk.W)
 
+    # Function insert_Value2
     def insert_value2(self, optionSelect):
         if optionSelect.get() == "PAL":
             self.e9.delete(0, 'end')
@@ -509,6 +549,7 @@ class perception_module(tk.Frame):
             self.e10.insert(0, "480")
             self.e11.insert(0, "30")
 
+    # Function Insert_value
     def insert_value(self, optionSelect2):
         if optionSelect2.get() == '4:4:4':
             self.m1 = 4
@@ -523,6 +564,7 @@ class perception_module(tk.Frame):
             self.m2 = 2
             self.m3 = 2
 
+    # Function digital_latency
     def digital_latency(self):
         digital_l = (self.calculate_data_rate_digital() * 1000 * 2) + float(self.e6.get()) + float(
             self.e7.get()) + float(self.e8.get())
@@ -530,10 +572,12 @@ class perception_module(tk.Frame):
         global digital_Latency
         digital_Latency = digital_l
 
+    # Function calculate_data_rate_digital()
     def calculate_data_rate_digital(self):
         data_r = (float(self.e1.get()) * float(self.e2.get()) * float(self.e3.get()) * float(self.e4.get())) / 100000000
         return data_r
 
+    # Function calculate_y()
     def calculate_y(self):
         latency_y = ((float(self.e9.get()) * float(self.e10.get()) * 8) / (4 / self.m1)) + (
                 (float(self.e9.get()) * float(self.e10.get()) * 8) / (4 / self.m2)) + (
@@ -541,6 +585,7 @@ class perception_module(tk.Frame):
         final_y = round(((latency_y / 1000000) * (1 / 100) * 1000), 4)
         return final_y
 
+    # Function analogue_latency()
     def analogue_latency(self):
         analogue_l = (2 * (self.calculate_y() * 0.6)) + float(self.e12.get()) + float(self.e13.get()) + float(
             self.e14.get()) + float(self.e15.get())
@@ -587,42 +632,51 @@ class Total_latency(tk.Frame):
         # String for storing Final Latency
         self.myText = tk.StringVar()
 
+        # Label Total Latency
         tk.Label(self, text="Total Latency", bg="#093d81", fg="white", font=("Calibri", 13),
                  padx=320, height=2).grid(row=0, sticky=tk.E)
         tk.Label(self, text=" ", bg="#093d81", fg="white", font=("Calibri", 13), height=2).grid(row=1, sticky=tk.E)
+        # Label Perception Module Latency
         tk.Label(self, text="Perception Module Latency (ms)").grid(row=2, pady=5, padx=20, sticky=tk.W)
+        # Label DBW Module Latency
         tk.Label(self, text="DBW Module Latency (ms)").grid(row=3, pady=5, padx=20, sticky=tk.W)
+        # Label Total latency
         tk.Label(self, text="Total Latency (ms)").grid(row=4, padx=20, pady=5, sticky=tk.W)
         tk.Label(self, text="", textvariable=self.myText).grid(row=4, padx=305, column=0, pady=5, sticky=tk.W)
 
-        # Entry for storing value for Label
+        # Entry for storing value for Label Perception Module Latency
         self.e1 = tk.Entry(self)
         self.e1.grid(row=2, column=0)
 
-        # Entry for storing value for Label
+        # Entry for storing value for Label DBW Module Latency
         self.e2 = tk.Entry(self)
         self.e2.grid(row=3, column=0)
 
+        # Button to call function self.insert_value()
         b1 = tk.Button(self, text="Insert Values", width=17, height=2, bg="#093d81", fg="white",
                        command=lambda: self.insert_value())
         b1.grid(row=6, padx=130, sticky=tk.W)
+
+        # Button to call function self.calculate_total_latency()
         b2 = tk.Button(self, text="Calculate", width=17, height=2, bg="#093d81", fg="white",
                        command=lambda: self.calculate_total_latency())
         b2.grid(row=6, column=0, padx=300, sticky=tk.E)
+
         # Button to show Frame startPage
         Home_button = tk.Button(self, text="Home", bg="#093d81", fg="white", width=20, height=2,
                                 command=lambda: controller.show_frame(startPage))
         Home_button.grid(row=15, column=0, pady=30, padx=50, sticky=tk.E)
 
+    # Function insert_value()
     def insert_value(self):
         global analogue_Latency, digital_Latency, DBW_module_latency
         self.e1.insert(0, str(analogue_Latency + digital_Latency))
         self.e2.insert(0, str(DBW_module_latency))
 
+    # Function calculate_total_latency
     def calculate_total_latency(self):
         total_latency = float(self.e1.get()) + float(self.e2.get())
         self.myText.set(str(total_latency) + " ms")
-
 
 # Main Program;
 if "__main__" == __name__:
