@@ -41,7 +41,7 @@ class App(tk.Tk):
 
         # iterating through a tuple consisting of the different page layouts
         page_layout = (register_user_screen, startPage, Bullet, DBW_module, DBW_module_info,
-                       perception_module, perception_module_info, Total_latency)
+                       perception_module, perception_module_info, Total_latency, About)
         for F in page_layout:
             frame = F(container, self)
 
@@ -79,11 +79,11 @@ class register_user_screen(tk.Frame):
 
         # button for "Main Screen" Frame
         tk.Button(self, text="Get In", height="2", width="30", bg="#093d81", fg="white",
-                  command=lambda: controller.show_frame(startPage)).grid(
-            row=10, sticky=tk.S)
+                  command=lambda: controller.show_frame(startPage)).grid( row=10, sticky=tk.S)
 
         # button for "About" Frame
-        tk.Button(self, text="About", height="2", width="30", bg="#093d81", fg="white").grid(
+        tk.Button(self, text="About", height="2", width="30", bg="#093d81", fg="white",
+                  command=lambda: controller.show_frame(About)).grid(
             row=13, sticky=tk.S, pady=5)
 
 
@@ -132,7 +132,30 @@ class startPage(tk.Frame):
 class About(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        # Loading Perception Module in the tkinter frame
+        self.config(bg="#F8F4F4")
+        tk.Label(self, text="ABOUT", bg="#093d81", fg="white", font=("Calibri", 13),
+                 padx=330, height=2).grid(row=0, sticky=tk.E)
+        load = Image.open("img/sathyabama.png")
 
+        # Rendering loaded image in the frame
+        render = ImageTk.PhotoImage(load)
+        img = tk.Label(self, image=render,bg="#F8F4F4")
+        img.image = render
+        img.grid(row=2,padx=145, sticky=tk.W)
+
+        load = Image.open("img/team.png")
+
+        # Rendering loaded image in the frame
+        render = ImageTk.PhotoImage(load)
+        img = tk.Label(self, image=render,bg="#F8F4F4")
+        img.image = render
+        img.grid(row=3, sticky=tk.E)
+
+        # Button to open frame startPage
+        Home_button = tk.Button(self, text="Go Back", bg="#093d81", fg="white", width=20, height=2,
+                                command=lambda: controller.show_frame(register_user_screen))
+        Home_button.grid(row=4, column=0, pady=30, padx=50, sticky=tk.E)
 
 class Bullet(tk.Frame):
 
